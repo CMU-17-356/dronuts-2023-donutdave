@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/CMU-17-356/dronuts-2023-donutdave/issues"
   },
-  "homepage": "https://github.com/CMU-17-356/dronuts-2023-donutdave#readme"
+  "homepage": "https://github.com/CMU-17-356/dronuts-2023-donutdave#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
