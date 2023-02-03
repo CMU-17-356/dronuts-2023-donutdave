@@ -12,6 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: cd express
+      - run: cd dronuts-2023-donutdave/express
       - run: pwd
       - run: flyctl deploy --remote-only
