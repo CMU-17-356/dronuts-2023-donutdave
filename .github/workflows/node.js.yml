@@ -26,9 +26,11 @@ jobs:
         npm ci
         npm-check
         cd ..
+        pwd
 
     - name: Run linter
-      run: | 
+      run: |
+        pwd
         npm run lint
 
     - name: Run tests
