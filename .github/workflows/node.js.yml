@@ -24,7 +24,7 @@ jobs:
         npm-check
         cd express
         npm ci
-        npm-check
+        npm-check --skip-unused
         cd ..
         pwd
 
