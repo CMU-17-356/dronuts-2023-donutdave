@@ -38,6 +38,7 @@ jobs:
         npm run test
 
     - name: Build app
+      timeout-minutes: 1
       run: |
         cd express
         DEBUG=express:* npm start
