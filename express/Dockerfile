@@ -1,9 +1,7 @@
-FROM node:alpine3.11
-MAINTAINER <GROUP_NAME_HERE>
+FROM node:19-alpine3.16
 
 # Change working directory
-WORKDIR /usr/src/app
-
+RUN pwd
 # Install App Dependencies
 COPY package*.json ./
 RUN npm install
@@ -12,5 +10,5 @@ RUN npm install
 COPY . .
 #TODO Run any build scripts here
 
-EXPOSE 80
+EXPOSE 8080
 CMD [ "npm", "start" ]
