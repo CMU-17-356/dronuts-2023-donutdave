@@ -29,15 +29,18 @@ jobs:
 
     - name: Run linter
       run: |
+        cd frontend
         npm run lint
 
     - name: Run tests
       run: | 
+        cd frontend
         npm run test
 
     - name: Build app
       timeout-minutes: 1
       run: |
+        cd frontend
         npm run build
         npm start
       
