@@ -11,4 +11,5 @@ COPY . .
 #TODO Run any build scripts here
 
 EXPOSE 8080
-CMD [ "npm", "run", "dev" ]
+RUN npm run build
+CMD [ "npm", "run", "start" ]
