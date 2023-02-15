@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Initial routing adapted from https://github.com/joeythelantern/React-Router-6-Example , see here for a more complicated/ in depth example of routing.
+
 ## Available Scripts
 
 In the project directory, you can run:
