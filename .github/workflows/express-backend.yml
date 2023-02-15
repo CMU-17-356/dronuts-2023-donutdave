@@ -8,7 +8,6 @@ on: push
 defaults:
   run:
     shell: bash
-    working-directory: dronuts-backend
 
 jobs:
   build:
@@ -26,16 +25,20 @@ jobs:
     - name: Install node packages
       run: |
         npm ci
+      working-directory: ./dronuts-backend
 
     - name: Run linter
       run: |
         npm run lint
+      working-directory: ./dronuts-backend
 
     - name: Run tests
       run: | 
         npm run test
+      working-directory: ./dronuts-backend
 
     - name: Build app
       timeout-minutes: 1
       run: |
         npm run dev
+      working-directory: ./dronuts-backend

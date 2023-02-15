@@ -9,7 +9,7 @@ RUN npm install
 # Copy App Source
 COPY . .
 #TODO Run any build scripts here
-
-EXPOSE 8080
 RUN npm run build
+EXPOSE 8080
+
 CMD [ "npm", "run", "start" ]
