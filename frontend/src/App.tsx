@@ -3,9 +3,9 @@ import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import Layout from './components/Layout';
 
-type ApplicationProps = {}
+type AppProps = {}
 
-function Application (props : ApplicationProps) {
+function App (props : AppProps) {
     return (
         <BrowserRouter>
             <Routes>
@@ -18,4 +18,4 @@ function Application (props : ApplicationProps) {
     );
 };
 
-export default Application;
+export default App;
