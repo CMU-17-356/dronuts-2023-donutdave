@@ -11,26 +11,22 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Change working directory to backend
+      run: | 
+        cd dronuts-backend
+        
     - name: Set up Node.js 18.x
       uses: actions/setup-node@v3
       with:
         node-version: 18.x
         cache: 'npm'
 
-    - name: Install and check node packages
+    - name: Install node packages
       run: | 
         npm ci
-        npm i -g npm-check
-        npm-check
-        cd express
-        npm ci
-        npm-check --skip-unused
-        cd ..
-        pwd
 
     - name: Run linter
       run: |
-        pwd
         npm run lint
 
     - name: Run tests
@@ -40,5 +36,4 @@ jobs:
     - name: Build app
       timeout-minutes: 1
       run: |
-        cd dronuts-backend
-        DEBUG=express:* npm start
+        npm run dev
