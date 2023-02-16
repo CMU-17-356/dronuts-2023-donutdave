@@ -13,7 +13,17 @@ describe('Testing making new user', function () {
     });
   })
 
-  it('2. Invalid if no password', function (done) {
+  it('2. Invalid if username contains forbidden characters', function (done) {
+    var u = new User({ username: "$admin", password: "bruh", full_name: "Thanos" })
+    u.validate(function(err: Error) {
+      if (err) {
+        expect(err.errors.username).to.exist;
+        done();
+      }
+    });
+  })
+
+  it('3. Invalid if no password', function (done) {
     var u = new User({ username: "admin", full_name: "Thanos" })
     u.validate(function(err: Error) {
       if (err) {
@@ -23,7 +33,7 @@ describe('Testing making new user', function () {
     });
   })
 
-  it('3. Invalid if no full name', function (done) {
+  it('4. Invalid if no full name', function (done) {
     var u = new User({ username: "admin", password: "bruh" })
     u.validate(function(err: Error) {
       if (err) {
@@ -33,7 +43,7 @@ describe('Testing making new user', function () {
     });
   })
 
-  it('4. Creating new user', function (done) {
+  it('5. Creating new user', function (done) {
     var u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
     u.validate(function () {
       expect(u.username).to.exist;
@@ -45,7 +55,7 @@ describe('Testing making new user', function () {
     })
   })
 
-  it('5. Add item to cart', function (done) {
+  it('6. Add item to cart', function (done) {
     var u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
     u.validate(function () {
       expect(u.cart).to.have.length(0);
@@ -64,7 +74,7 @@ describe('Testing making new user', function () {
     })
   })
 
-  it('6. Update item quantity if already exist in cart', function (done) {
+  it('7. Update item quantity if already exist in cart', function (done) {
     var u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
     u.validate(function () {
       u.addItemToCart("Plain donut", 5);
@@ -79,7 +89,7 @@ describe('Testing making new user', function () {
     })
   })
 
-  it('7. Increment or decrement item in cart', function (done) {
+  it('8. Increment or decrement item in cart', function (done) {
     var u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
     u.validate(function () {
       u.addItemToCart("Plain donut", 1);

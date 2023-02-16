@@ -1,6 +1,8 @@
 import mongoose from 'mongoose'
 import { Drone, IDrone } from './drone'
 
+const sanitizerPlugin = require('mongoose-sanitizer-plugin');
+
 interface IMerchant {
   name: String;
   location: String;
@@ -27,6 +29,8 @@ const merchantSchema = new mongoose.Schema({
     default: "" // TODO: or some other default image path
   }
 })
+
+merchantSchema.plugin(sanitizerPlugin);
 const Merchant = mongoose.model('Merchant', merchantSchema)
 
 export { Merchant }

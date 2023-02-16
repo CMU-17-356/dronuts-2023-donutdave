@@ -1,5 +1,7 @@
 import { Model, Schema, model } from 'mongoose'
 
+const sanitizerPlugin = require('mongoose-sanitizer-plugin');
+
 interface IOrder {
   username: String;
   items: [{
@@ -63,6 +65,7 @@ orderSchema.method('addItemToOrder', function addItemToOrder(pname, q=1) {
   this.save(); // TODO: this is causing tests to hang after completion
 })
 
+orderSchema.plugin(sanitizerPlugin);
 const Order = model('Order', orderSchema)
 
 export { Order }

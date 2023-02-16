@@ -1,8 +1,10 @@
 import { Model, Schema, model } from 'mongoose'
 import { Order, IOrder } from './order'
 
+const sanitizerPlugin = require('mongoose-sanitizer-plugin');
+
 interface IUser {
-  username: String;
+  username: String; // allowed characters: letters, numbers, and _
   password: String;
   full_name: String;
   history: [IOrder];
@@ -36,7 +38,8 @@ const userSchema: Schema = new Schema<IUser, UserModel, IUserMethods>({
   username: {
     type: String,
     required: true,
-    // TODO: unique validator, sanitize input
+    match: /^[a-z0-9_]+$/
+    // TODO: unique validator
   },
   password: {
     type: String,
@@ -115,6 +118,7 @@ userSchema.method('decrementItemQuantity', function decrementItemQuantity(pname)
   }
 })
 
+userSchema.plugin(sanitizerPlugin);
 const User = model<IUser>('User', userSchema)
 
 export { User }

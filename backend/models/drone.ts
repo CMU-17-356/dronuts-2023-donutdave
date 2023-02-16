@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 
+const sanitizerPlugin = require('mongoose-sanitizer-plugin');
+
 interface IDrone {
   id: String;
   deployed: Boolean;
@@ -11,7 +13,6 @@ const droneSchema = new mongoose.Schema({
   id: {
     type: String,
     required: true,
-    // TODO: unique validator, sanitize input
   },
   deployed: {
     type: Boolean,
@@ -26,6 +27,8 @@ const droneSchema = new mongoose.Schema({
     default: "" // TODO: or some other default image path
   }
 })
+
+droneSchema.plugin(sanitizerPlugin);
 const Drone = mongoose.model('Drone', droneSchema)
 
 export { Drone }
