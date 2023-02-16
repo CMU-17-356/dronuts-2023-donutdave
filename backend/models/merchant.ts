@@ -11,7 +11,7 @@ interface IMerchant {
 const merchantSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    default: "Lawrenceville Donut Store"
     // TODO: unique validator, sanitize input
   },
   location: {
@@ -29,4 +29,5 @@ const merchantSchema = new mongoose.Schema({
 })
 const Merchant = mongoose.model('Merchant', merchantSchema)
 
-export { Merchant, IMerchant }
+export { Merchant }
+export type { IMerchant }
