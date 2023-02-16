@@ -4,6 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Initial routing adapted from https://github.com/joeythelantern/React-Router-6-Example , see here for a more complicated/ in depth example of routing.
 
+### `npm install`
+
+Installs all packages needed to run the app locally.
+
 ## Available Scripts
 
 In the project directory, you can run:
