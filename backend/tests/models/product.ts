@@ -26,10 +26,10 @@ describe('Testing making new product', function () {
   it('3. Creating new product', function (done) {
     var p = new Product({ title: "Plain donut", price: "0.99" })
     p.validate(function () {
-      expect(p.title).to.exist
-      expect(p.price).to.exist
-      expect(p.image).to.exist
-      done()
+      expect(p.title).to.exist;
+      expect(p.price).to.exist;
+      expect(p.image).to.exist;
+      done();
     })
   })
 })
