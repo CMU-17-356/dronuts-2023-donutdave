@@ -7,7 +7,7 @@ function HomePage (props : HomePageProps) {
         <div>
             <p>This is the home page.</p>
             <p>
-                <Link to="/order">Go to the Employee Page!</Link>
+                <Link to="/employee">Go to the Employee Page!</Link>
             </p>
 
         </div>
