@@ -1,69 +1,6 @@
-// Written with assistance from ChatGPT
-
 import { Link } from 'react-router-dom';
-import React, { FC, useState } from "react";
 
 type EmployeePageProps = {}
-
-interface Item {
-    quantity: number;
-    name: string;
-}
-  
-interface Props {
-  items: Item[];
-}
-
-const ItemList: FC<Props> = ({ items }) => {
-  return (
-    <table>
-      <tr>
-          <th style={{display: 'flex'}}>Donut</th>
-          <th>Quantity</th>
-      </tr>
-      {items.map((item) => (
-        <tr >
-          <td>{item.name}</td>
-          <td>{item.quantity}</td>
-        </tr>
-      ))}
-    </table>
-  );
-};
-
-const donutList = [
-    {quantity: 1, name: "Jelly"}, 
-    {quantity: 1, name: "Strawberry Frosted"},
-    {quantity: 2, name: "Chocolate Glaze"},
-];
-
-function Form() {
-  const [text, setText] = useState('');
-
-  const handleSubmit = (event: { preventDefault: () => void; }) => {
-    event.preventDefault();
-    console.log(`Submitted text: ${text}`);
-    setText('');
-  };
-
-  const handleTextChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setText(event.target.value);
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <tr>
-        <label>
-          Drone Number: 
-        </label>
-      </tr>
-      <tr>
-        <input type="text" value={text} onChange={handleTextChange} />
-      </tr>
-      <button type="submit">Send Order</button>
-    </form>
-  );
-}
   
 function EmployeePage (props : EmployeePageProps) {
     return (
@@ -73,10 +10,20 @@ function EmployeePage (props : EmployeePageProps) {
                 <Link to="/">Go to the Home Page!</Link>
             </p>
             <div style={{display: 'flex', justifyContent: 'center', padding: 30}}>
-              <ItemList items={donutList} />
-            </div>
-            <div style={{display: 'flex', justifyContent: 'center', height: 10}}>
-              <Form />
+              <table>
+                <tr>
+                  <th>In Progress</th>
+                </tr>
+                <tr>
+                  <td><Link to="/order">Order 1201</Link></td>
+                </tr>
+                <tr>
+                  <td>Order 1202</td>
+                </tr>
+                <tr>
+                  <td>Order 1203</td>
+                </tr>
+              </table>
             </div>
         </div>
     );
