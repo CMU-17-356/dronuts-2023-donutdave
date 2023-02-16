@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
+import EmployeePage from './pages/EmployeePage';
 import Layout from './components/Layout';
 
 type AppProps = {}
@@ -11,7 +11,7 @@ function App (props : AppProps) {
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<HomePage />} />
-                    <Route path="about" element={<AboutPage />} />
+                    <Route path="employee" element={<EmployeePage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
