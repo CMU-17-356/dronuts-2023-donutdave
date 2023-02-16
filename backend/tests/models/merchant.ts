@@ -2,7 +2,7 @@
 import { Merchant } from '../../models/merchant'
 import { expect } from 'chai';
 
-describe('Testing making new drone', function () {
+describe('Testing making new merchant', function () {
   it('1. Creating default merchant', function (done) {
     var m = new Merchant({})
     m.validate(function () {
