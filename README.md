@@ -1,13 +1,9 @@
 Dronuts Team Donut Dave
 
-App is set up with node, eslint, and jest at the top level.
+App is divided into the React frontend and the Express backend.
 
-An Express app for the backend was set up in a subdirectory.
-
-There is a Github Action that runs the linter, tests, and runs the app for a minute before shutting down.
-
-Another Github action deploys the Express backend to fly.io.
+There is a Github Action that runs the linter and tests.
 
 See the deployed app here:
 
-https://dronuts-dave.fly.dev/
+https://dronuts-dave-frontend.fly.dev/
