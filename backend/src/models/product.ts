@@ -1,6 +1,6 @@
-import mongoose from 'mongoose'
+import { Schema, model } from 'mongoose'
 
-const sanitizerPlugin = require('mongoose-sanitizer-plugin');
+// const sanitizerPlugin = require('mongoose-sanitizer-plugin');
 
 interface IProduct {
   title: String;
@@ -8,7 +8,7 @@ interface IProduct {
   image: String;
 }
 
-const productSchema = new mongoose.Schema({
+const productSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -23,8 +23,8 @@ const productSchema = new mongoose.Schema({
   }
 })
 
-productSchema.plugin(sanitizerPlugin);
-const Product = mongoose.model('Product', productSchema)
+// productSchema.plugin(sanitizerPlugin);
+const Product = model('Product', productSchema)
 
 export { Product }
 export type { IProduct }

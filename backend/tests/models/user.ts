@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { User } from '../../models/user'
+import { User } from '../../src/models/user'
 import { expect } from 'chai';
 
 describe('Testing making new user', function () {

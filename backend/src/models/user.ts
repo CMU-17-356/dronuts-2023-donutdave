@@ -1,7 +1,7 @@
 import { Model, Schema, model } from 'mongoose'
-import { Order, IOrder } from './order'
+import { Order, IOrder } from './order.js'
 
-const sanitizerPlugin = require('mongoose-sanitizer-plugin');
+// const sanitizerPlugin = require('mongoose-sanitizer-plugin');
 
 interface IUser {
   username: String; // allowed characters: letters, numbers, and _
@@ -118,7 +118,7 @@ userSchema.method('decrementItemQuantity', function decrementItemQuantity(pname)
   }
 })
 
-userSchema.plugin(sanitizerPlugin);
+// userSchema.plugin(sanitizerPlugin);
 const User = model<IUser>('User', userSchema)
 
 export { User }

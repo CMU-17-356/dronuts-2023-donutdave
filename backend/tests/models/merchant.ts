@@ -1,7 +1,6 @@
 // @ts-nocheck
-import { Merchant } from '../../models/merchant'
+import { Merchant, defaultMerchant } from '../../src/models/merchant'
 import { expect } from 'chai';
-import { defaultMerchant } from '../../defaults';
 
 describe('Testing making new merchant', function () {
   it('1. Creating default merchant', function (done) {

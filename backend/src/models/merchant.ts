@@ -1,8 +1,9 @@
-import mongoose from 'mongoose'
-import { Product, IProduct } from './product'
-import { defaultMerchant } from '../defaults';
+import { Schema, model } from 'mongoose'
+import { Product, IProduct } from './product.js'
 
-const sanitizerPlugin = require('mongoose-sanitizer-plugin');
+// const sanitizerPlugin = require('mongoose-sanitizer-plugin');
+
+const defaultMerchant = "Lawrenceville Donut Store"
 
 interface IMerchant {
   name: String;
@@ -13,7 +14,7 @@ interface IMerchant {
   }];
 }
 
-const merchantSchema = new mongoose.Schema({
+const merchantSchema = new Schema({
   name: {
     type: String,
     default: defaultMerchant,
@@ -29,8 +30,8 @@ const merchantSchema = new mongoose.Schema({
   }
 })
 
-merchantSchema.plugin(sanitizerPlugin);
-const Merchant = mongoose.model('Merchant', merchantSchema)
+// merchantSchema.plugin(sanitizerPlugin);
+const Merchant = model('Merchant', merchantSchema)
 
-export { Merchant }
+export { Merchant, defaultMerchant }
 export type { IMerchant }
