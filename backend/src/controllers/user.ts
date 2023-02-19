@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 
 const createUser = async (req: Request, res: Response) => {
   const body = req.body
-  const user = new User(body);
+  const user = new User(body)
   await user.save()
     .then(() => {
       res.status(201).send({
@@ -14,14 +14,14 @@ const createUser = async (req: Request, res: Response) => {
     })
     .catch(err => {
       if (err.name === "ValidationError") {
-        let errors: {[key: string]: string} = {};
+        let errors: {[key: string]: string} = {}
         Object.keys(err.errors).forEach((key) => {
-          errors[key] = err.errors[key].message;
+          errors[key] = err.errors[key].message
         });
       
-        return res.status(400).send(errors);
+        return res.status(400).send(errors)
       };
-      return res.status(500).send("Other errors");
+      return res.status(500).send("Other errors")
     });
 };
 

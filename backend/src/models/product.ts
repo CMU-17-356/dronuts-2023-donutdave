@@ -6,7 +6,7 @@ interface IProduct {
   title: String;
   price: Number;
   image: String;
-}
+};
 
 const productSchema = new Schema({
   title: {
@@ -20,8 +20,8 @@ const productSchema = new Schema({
   image: {
     type: String,
     default: "" // TODO: or some other default image path
-  }
-})
+  },
+});
 
 // productSchema.plugin(sanitizerPlugin);
 const Product = model('Product', productSchema)

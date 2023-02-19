@@ -12,7 +12,7 @@ interface IUser {
     product_name: String;
     quantity: Number;
   }];
-}
+};
 
 // https://mongoosejs.com/docs/typescript/statics-and-methods.html
 interface IUserMethods {
@@ -32,91 +32,91 @@ interface IUserMethods {
   addOrderToHistory(order: IOrder): void;
 }
 
-type UserModel = Model<IUser, {}, IUserMethods>;
+type UserModel = Model<IUser, {}, IUserMethods>
 
 const userSchema: Schema = new Schema<IUser, UserModel, IUserMethods>({
   username: {
     type: String,
     required: true,
-    match: /^[a-z0-9_]+$/
+    match: /^[a-z0-9_]+$/,
     // TODO: unique validator
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   full_name: {
     type: String,
-    required: true
+    required: true,
   },
   history: {
     type: [Order.schema],
-    default: []
+    default: [],
   },
   cart: {
     type: [{
       product_name: {
         type: String,
-        required: true
+        required: true,
       },
       quantity: {
         type: Number,
         default: 1,
         validate: {
           validator: Number.isInteger,
-          message: '{VALUE} is not an integer value'
-        }
+          message: '{VALUE} is not an integer value',
+        },
       },
     }],
-    default: []
-  }
-})
+    default: [],
+  },
+});
 
 userSchema.method('addItemToCart', function addItemToCart(pname, q=1) {
-  var hasFound = false;
+  var hasFound = false
   for (let i = 0; i < this.cart.length; i++) {
     if (this.cart[i].product_name === pname) {
-      this.cart[i].quantity += q;
-      this.save();
-      hasFound = true;
-    }
-  }
+      this.cart[i].quantity += q
+      this.save()
+      hasFound = true
+    };
+  };
   if (!hasFound) {
-    this.cart.push({product_name: pname, quantity: q});
-    this.save(); // TODO: this is causing tests to hang after completion
+    this.cart.push({product_name: pname, quantity: q})
+    this.save() // TODO: this is causing tests to hang after completion
   }
-})
+});
 
 userSchema.method('incrementItemQuantity', function incrementItemQuantity(pname) {
-  var hasFound = false;
+  var hasFound = false
   for (let i = 0; i < this.cart.length; i++) {
     if (this.cart[i].product_name === pname) {
-      this.cart[i].quantity += 1;
-      this.save();
-      hasFound = true;
-    }
-  }
+      this.cart[i].quantity += 1
+      this.save()
+      hasFound = true
+    };
+  };
   if (!hasFound) {
     throw new Error('incrementItemQuantity: item not found in cart')
-  }
-})
+  };
+});
 
 userSchema.method('decrementItemQuantity', function decrementItemQuantity(pname) {
-  var hasFound = false;
+  var hasFound = false
   for (let i = 0; i < this.cart.length; i++) {
     if (this.cart[i].product_name === pname) {
-      this.cart[i].quantity -= 1;
+      this.cart[i].quantity -= 1
       if (this.cart[i].quantity == 0) {
-        this.cart.splice(i, 1);
-      }
-      this.save();
-      hasFound = true;
-    }
-  }
+        this.cart.splice(i, 1)
+      };
+      this.save()
+      hasFound = true
+    };
+  };
   if (!hasFound) {
-    throw new Error('decrementItemQuantity: item not found in cart');
-  }
-})
+    throw new Error('decrementItemQuantity: item not found in cart')
+  };
+});
 
 // userSchema.plugin(sanitizerPlugin);
 const User = model<IUser>('User', userSchema)

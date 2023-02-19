@@ -12,7 +12,7 @@ interface IMerchant {
     product: IProduct;
     inventory: Number;
   }];
-}
+};
 
 const merchantSchema = new Schema({
   name: {
@@ -27,8 +27,8 @@ const merchantSchema = new Schema({
   menu: {
     type: [Product.schema],
     default: [],
-  }
-})
+  },
+});
 
 // merchantSchema.plugin(sanitizerPlugin);
 const Merchant = model('Merchant', merchantSchema)
