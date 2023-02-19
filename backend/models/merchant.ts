@@ -1,32 +1,31 @@
 import mongoose from 'mongoose'
-import { Drone, IDrone } from './drone'
+import { Product, IProduct } from './product'
+import { defaultMerchant } from '../defaults';
 
 const sanitizerPlugin = require('mongoose-sanitizer-plugin');
 
 interface IMerchant {
   name: String;
   location: String;
-  drones: [IDrone];
-  image: String;
+  menu: [{
+    product: IProduct;
+    inventory: Number;
+  }];
 }
 
 const merchantSchema = new mongoose.Schema({
   name: {
     type: String,
-    default: "Lawrenceville Donut Store"
-    // TODO: unique validator, sanitize input
+    default: defaultMerchant,
+    // TODO: unique validator
   },
   location: {
     type: String,
     default: "Lawrenceville",
   },
-  drones: {
-    type: [Drone.schema],
+  menu: {
+    type: [Product.schema],
     default: [],
-  },
-  image: {
-    type: String,
-    default: "" // TODO: or some other default image path
   }
 })
 
