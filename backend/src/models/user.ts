@@ -39,7 +39,6 @@ const userSchema: Schema = new Schema<IUser, UserModel, IUserMethods>({
     type: String,
     required: true,
     match: /^[a-z0-9_]+$/,
-    // TODO: unique validator
   },
   password: {
     type: String,
