@@ -17,12 +17,12 @@ const createUser = async (req: Request, res: Response) => {
   
   // validate username uniqueness
   let u = await User.findOne({username: body.username})
-  if (u) return res.status(400).send("Username already exists")
+  if (u) return res.status(400).json("Username already existed")
     
   const user = new User(body)
   await user.save()
     .then(() => {
-      res.status(201).send("User created successfully");
+      res.status(201).json("User created successfully");
     })
     .catch(err => {
       if (err.name === "ValidationError") {
@@ -34,7 +34,7 @@ const createUser = async (req: Request, res: Response) => {
         return res.status(400).json(errors)
       };
       console.log("createUser: " + err)
-      return res.status(500).send("Other errors")
+      return res.status(500).json("Other errors")
     });
 };
 
@@ -44,11 +44,11 @@ const getUserByUsername = async (req: Request, res: Response) => {
       if (user) {
         return res.status(200).json(user)
       }
-      return res.status(500).send("User not found")
+      return res.status(500).json("User not found")
     })
     .catch(err => {
       console.log("getUserByUsername: " + err)
-      return res.status(500).send(err)
+      return res.status(500).json(err)
     });
 };
 
@@ -56,14 +56,14 @@ const deleteUserByUsername = async (req: Request, res: Response) => {
   await User.deleteOne({username: req.params.username})
     .then((result) => {
       if (result.deletedCount > 0) {
-        return res.status(200).send("User deleted")
+        return res.status(200).json("User deleted")
       } else {
-        return res.status(200).send("User not found")
+        return res.status(200).json("User not found")
       };
     })
     .catch(err => {
       console.log("deleteUserByUsername: " + err)
-      return res.status(500).send(err)
+      return res.status(500).json(err)
     });
 };
 

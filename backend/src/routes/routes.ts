@@ -7,6 +7,5 @@ router.get('/users', getUsers)
 router.post('/users', createUser)
 router.get('/users/:username', getUserByUsername)
 router.delete('/users/:username', deleteUserByUsername)
-// TODO: update user
 
 export { router }
