@@ -2,7 +2,7 @@
 import { User } from '../../src/models/user'
 import { expect } from 'chai';
 
-describe('Testing making new user', function () {
+describe('Testing User model', function () {
   it('1. Invalid if no username', function (done) {
     var u = new User({ password: "bruh", full_name: "Thanos" })
     u.validate(function(err: Error) {
