@@ -9,14 +9,14 @@ import { should } from 'chai';
 import { Server } from 'http';
 
 //Our parent block
-describe('Books', () => {
+describe('Users', () => {
   beforeEach((done) => { //empty the database
       User.deleteMany({}, (err) => { 
           done();           
       });        
   });
 
-  describe('Create new user', () => {
+  describe('Create user', () => {
     it('1. Valid new user', (done) => {
       request(app)
         .post('/api/v1/users')
@@ -53,28 +53,93 @@ describe('Books', () => {
     });
   });
 
-  // TODO: I do NOT know why this doesn't work
-  // describe('Get all users', () => {
-  //   var u1 = new User({ username: "admin1", password: "bruh", full_name: "Thanos" })
-  //   u1.save(console.log("bruh"));
-  //   var u2 = new User({ username: "admin2", password: "okay", full_name: "Ironman" })
-  //   u2.save().then(console.log("okay"));
+  describe('View user', () => {
+    it('1. View existing user', (done) => {
+      var u1 = new User({ username: "existing", password: "bruh", full_name: "Thanos" })
+      u1.save();
+      request(app)
+        .get('/api/v1/users/existing')
+        .then((res2) => {
+          expect(res2.statusCode).to.equal(200);
+          expect(res2.body.username = "existing");
+          done();
+        })
+        .catch((err) => done(err))
+    });
 
-  //   it('it should GET all the books', (done) => {
-  //     request(app).get('/api/v1/users')
-  //       .then((res)=>{
-  //           expect(res.statusCode).to.equal(200);
-  //           console.log(res.body);
-  //           expect(res.body).to.have.length(2);
-  //           done();
-  //       })
-  //       .catch((err) => done(err))
-  //   });
-  //   User.find().then((res) => {
-  //     console.log(res)
-  //     done()
-  //   })
-  // });
+    it('2. View non-existing user', (done) => {
+      request(app)
+        .get('/api/v1/users/nonexisting')
+        .then((res) => {
+          expect(res.statusCode).to.equal(404);
+          done();
+        })
+        .catch((err) => done(err))
+    });
+
+    it('3. View all users', (done) => {
+      var u1 = new User({ username: "new1", password: "bruh", full_name: "Thanos" })
+      u1.save();
+      var u2 = new User({ username: "new2", password: "okay", full_name: "Ironman" })
+      u2.save();
+      request(app).get('/api/v1/users')
+        .then((res)=>{
+            expect(res.statusCode).to.equal(200);
+            expect(res.body).to.have.length(2);
+            expect(res.body[0].username).to.equal("new1");
+            expect(res.body[1].username).to.equal("new2");
+            done();
+        })
+        .catch((err) => done(err))
+    });
+  });
+
+  describe('Update user', () => {
+    it('1. Update existing user', (done) => {
+      var u1 = new User({ username: "updating", password: "bruh", full_name: "Thanos" })
+      u1.save();
+      request(app)
+        .patch('/api/v1/users/updating')
+        .send( { password: "okay" } )
+        .then((res) => {
+          expect(res.statusCode).to.equal(201);
+          User.findOne({username: "updating"})
+            .then(rec => {
+              expect(rec.password).to.equal("okay");
+              expect(rec.full_name).to.equal("Thanos");
+              done();
+            })
+            .catch((err) => done(err))
+        })
+        .catch((err) => done(err))
+    });
+
+    it('2. Update non-existing user', (done) => {
+      request(app)
+        .patch('/api/v1/users/nonexisting')
+        .send( { password: "okay" } )
+        .then((res) => {
+          expect(res.statusCode).to.equal(404);
+          done();
+        })
+        .catch((err) => done(err))
+    });
+
+    it('3. Cannot update username to an existing username', (done) => {
+      var u1 = new User({ username: "new1", password: "bruh", full_name: "Thanos" })
+      u1.save();
+      var u2 = new User({ username: "new2", password: "okay", full_name: "Ironman" })
+      u2.save();
+      request(app)
+        .patch('/api/v1/users/new2')
+        .send( { username: "new1" } )
+        .then((res) => {
+          expect(res.statusCode).to.equal(400);
+          done();
+        })
+        .catch((err) => done(err))
+    });
+  });
 
   after((done) => {
     server.close();
