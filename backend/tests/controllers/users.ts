@@ -1,12 +1,8 @@
 // @ts-nocheck
 import { User } from '../../src/models/user'
-import { getUsers, createUser, getUserByUsername, deleteUserByUsername } from '../../src/controllers/users.js'
 import { expect } from 'chai';
 import { app, server } from '../../src/index.js';
-import mongoose from 'mongoose';
 import request from 'supertest';
-import { should } from 'chai';
-import { Server } from 'http';
 
 //Our parent block
 describe('Users', () => {
