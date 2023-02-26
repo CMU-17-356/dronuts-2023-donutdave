@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 type EmployeePageProps = {}
   
 function EmployeePage (props : EmployeePageProps) {
-    return (
+  return (
         <div >
             <p>This is the employee page.</p>
             <p>

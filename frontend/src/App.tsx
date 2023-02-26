@@ -4,6 +4,7 @@ import EmployeePage from './pages/EmployeePage';
 import CustomerPage from './pages/CustomerPage';
 import DonutPage from './pages/DonutPage';
 import OrderPage from './pages/OrderPage';
+import SignUpPage from './pages/SignUpPage';
 import Layout from './components/Layout';
 
 type AppProps = {}
@@ -18,6 +19,7 @@ function App (props : AppProps) {
                     <Route path="customer" element={<CustomerPage />} />
                     <Route path="donut" element={<DonutPage />} />
                     <Route path="order" element={<OrderPage />} />
+                    <Route path="signup" element={<SignUpPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>

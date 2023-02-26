@@ -10,6 +10,8 @@ function HomePage (props : HomePageProps) {
                 <Link to="/employee">Go to the Employee Page!</Link>
                 <br></br>
                 <Link to="/customer">Go to the Customer Page!</Link>
+                <br></br>
+                <Link to="/signup">Go to the Sign Up Page!</Link>
             </p>
 
         </div>
