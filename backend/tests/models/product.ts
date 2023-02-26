@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Product } from '../../models/product'
+import { Product } from '../../src/models/product'
 import { expect } from 'chai';
 
 describe('Testing making new product', function () {
