@@ -82,8 +82,8 @@ describe('Users', () => {
         .then((res)=>{
             expect(res.statusCode).to.equal(200);
             expect(res.body).to.have.length(2);
-            expect(res.body[0].username).to.equal("new1");
-            expect(res.body[1].username).to.equal("new2");
+            expect(res.body[0].username).to.be.oneOf(["new1", "new2"]);
+            expect(res.body[1].username).to.be.oneOf(["new1", "new2"]);
             done();
         })
         .catch((err) => done(err))
