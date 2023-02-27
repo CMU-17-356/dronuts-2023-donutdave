@@ -2,6 +2,7 @@
 
 import { Link } from 'react-router-dom';
 import React, { useState } from "react";
+import Button,  { ButtonProps } from '@mui/material/Button';
 
 type OrderPageProps = {}
 
@@ -28,14 +29,18 @@ function Form() {
       <tr>
         <input type="text" value={text} onChange={handleTextChange} />
       </tr>
-      <button type="submit">Order</button>
+      <Button type="submit">Order</Button>
     </form>
   );
 }
   
 function DonutPage (props : OrderPageProps) {
     return (
+      
         <div >
+          <Link to="/employee"> <Button >Employee Page</Button></Link>
+        <Link to="/customer"> <Button >Customer Page</Button></Link>
+        <Link to="/signup"> <Button >Sign Up</Button></Link>
             <p>This is the donut page.</p>
             <p>
                 <Link to="/customer">back</Link>
