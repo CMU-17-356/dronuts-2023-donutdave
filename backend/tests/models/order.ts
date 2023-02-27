@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Order } from '../../models/order'
+import { Order } from '../../src/models/order'
 import { expect } from 'chai';
 
 describe('Testing making new order', function () {

@@ -1,6 +1,6 @@
 import { Model, Schema, model } from 'mongoose'
 
-const sanitizerPlugin = require('mongoose-sanitizer-plugin');
+// const sanitizerPlugin = require('mongoose-sanitizer-plugin');
 
 interface IOrder {
   username: String;
@@ -10,7 +10,7 @@ interface IOrder {
   }];
   totals: Number;
   address: String;
-}
+};
 
 interface IOrderMethods {
   // if item with the same product name already exists in order, throw an error
@@ -19,9 +19,9 @@ interface IOrderMethods {
 
   // TODO: recalculate the current totals and return it
   updateAndGetTotals(): Number;
-}
+};
 
-type OrderModel = Model<IOrder, {}, IOrderMethods>;
+type OrderModel = Model<IOrder, {}, IOrderMethods>
 
 const orderSchema = new Schema<IOrder, OrderModel, IOrderMethods>({
   username: {
@@ -32,18 +32,18 @@ const orderSchema = new Schema<IOrder, OrderModel, IOrderMethods>({
     type: [{
       product_name: {
         type: String,
-        required: true
+        required: true,
       },
       quantity: {
         type: Number,
         default: 1,
         validate: {
           validator: Number.isInteger,
-          message: '{VALUE} is not an integer value'
-        }
+          message: '{VALUE} is not an integer value',
+        },
       },
     }],
-    default: []
+    default: [],
   },
   totals: {
     type: Number,
@@ -51,21 +51,21 @@ const orderSchema = new Schema<IOrder, OrderModel, IOrderMethods>({
   },
   address: {
     type: String,
-    default: ""
-  }
-})
+    default: "",
+  },
+});
 
 orderSchema.method('addItemToOrder', function addItemToOrder(pname, q=1) {
   for (let i = 0; i < this.items.length; i++) {
     if (this.items[i].product_name === pname) {
       throw new Error('addItemToOrder: item already exists in order')
-    }
-  }
+    };
+  };
   this.items.push({product_name: pname, quantity: q});
   this.save(); // TODO: this is causing tests to hang after completion
-})
+});
 
-orderSchema.plugin(sanitizerPlugin);
+// orderSchema.plugin(sanitizerPlugin);
 const Order = model('Order', orderSchema)
 
 export { Order }
