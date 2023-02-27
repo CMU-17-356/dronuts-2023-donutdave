@@ -15,7 +15,11 @@ const productSchema = new Schema({
   },
   price: {
     type: Number,
-    required: true
+    required: true,
+    validate: {
+      validator: function(p: Number) { return p > 0 },
+      message: '{VALUE} is not an integer value',
+    },
   },
   image: {
     type: String,
