@@ -172,7 +172,6 @@ class UsersController {
           user.history.push(order)
           await order.save()
           await user.save()
-
           return res.status(200).json(order)
         };
         return res.status(404).json(`User ${name} not found`)

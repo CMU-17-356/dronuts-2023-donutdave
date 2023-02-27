@@ -14,8 +14,9 @@ class ProductsController {
   }
 
   public getProductByName = async (req: Request, res: Response) => {
-    let title = req.params.title
-    await Product.findOne({title: title})
+    let title = req.params.title.replaceAll("_", " ")
+
+    await Product.findOne({title: {$regex: new RegExp(title), $options: 'i'}})
       .then(product => {
         if (product) {
           return res.status(200).json(product)
