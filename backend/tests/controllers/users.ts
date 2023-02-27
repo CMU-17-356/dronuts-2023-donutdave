@@ -291,6 +291,36 @@ describe('Users', () => {
     });
   });
 
+  describe('View user order history', () => {
+    it('1. View existing user history', (done) => {
+      var o1 = new Order({ username: "existing", totals: 10.28 })
+      var o2 = new Order({ username: "existing", totals: 12.23 })
+      var u = new User({ username: "existing", password: "bruh", full_name: "Thanos", history: [o1, o2]})
+      u.save().then(() => {
+        request(app)
+          .get('/api/users/existing/history')
+          .then((res) => {
+            expect(res.statusCode).to.equal(200);
+            expect(res.body).to.have.length(2);
+            expect(res.body[0].totals).to.equal(10.28);
+            expect(res.body[1].totals).to.equal(12.23);
+            done();
+          })
+          .catch((err) => done(err))
+      }).catch((err) => done(err))
+    });
+
+    it('2. View non-existing user history', (done) => {
+      request(app)
+        .get('/api/users/nonexisting/cart')
+        .then((res) => {
+          expect(res.statusCode).to.equal(404);
+          done();
+        })
+        .catch((err) => done(err))
+    });
+  });
+
   after((done) => {
     server.close();
     done();

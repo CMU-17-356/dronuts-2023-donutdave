@@ -5,7 +5,7 @@ import { Request, Response } from 'express'
 
 class UsersController {
   public getUsers = async (req: Request, res: Response) => {
-    await User.find({})
+    User.find({})
       .then(users => {
         return res.status(200).json(users)
       })
@@ -93,7 +93,7 @@ class UsersController {
       });
   };
 
-  public viewUserCart = async (req: Request, res: Response) => {
+  public getUserCart = async (req: Request, res: Response) => {
     let name = req.params.username
     User.findOne({username: name})
       .then(user => {
@@ -168,6 +168,7 @@ class UsersController {
             return res.status(500).json(`Invalid product in cart`)
           }
 
+          // add to order database and user's order history
           order.totals = totals
           user.history.push(order)
           await order.save()
@@ -180,7 +181,23 @@ class UsersController {
         console.log("checkoutUserCart: " + err)
         return res.status(500).json(err)
       });
-  }
+  };
+
+  public getUserOrderHistory = async (req: Request, res: Response) => {
+    let name = req.params.username
+    User.findOne({username: name})
+      .then(user => {
+        if (user) {
+          return res.status(200).json(user.history)
+        }
+        return res.status(404).json(`User ${name} not found`)
+      })
+      .catch(err => {
+        console.log("getUserOrderHistory: " + err)
+        return res.status(500).json(err)
+      });
+  };
+  
 }
 
 export { UsersController }
