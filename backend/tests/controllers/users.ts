@@ -3,8 +3,9 @@ import { User } from '../../src/models/user';
 import { Product } from '../../src/models/product';
 import { Order } from '../../src/models/order';
 import { expect } from 'chai';
-import { app, server } from '../../src/index.js';
+import { app, creditAPI, server } from '../../src/index.js';
 import request from 'supertest';
+import got from 'got';
 
 describe('Users', () => {
   beforeEach((done) => { // empty the database
@@ -255,16 +256,24 @@ describe('Users', () => {
                 expect(res.body.items[0].quantity).to.equal(5);
                 expect(res.body.items[1].title).to.equal("Chocolate donut");
                 expect(res.body.items[1].quantity).to.equal(3);
-                
-                // make sure order has been saved
-                Order.findById(res.body._id).then((order) => {
-                  expect(order.username).to.equal("admin");
-                  expect(order._id.toString()).equals(res.body._id);
-                  
-                  User.findById(u._id).then((user) => {
-                    expect(user.history).to.have.length(1);
-                    expect(user.history[0]._id.toString()).to.equal(res.body._id);
-                    done();
+
+                // make sure order has a valid transaction ID
+                let tid = res.body.transaction_id
+                got.get(`${creditAPI}/${tid}`).json().then((response) => {
+                  expect(response.amount).to.equal(10.92);
+
+                  // make sure order has been saved
+                  Order.findById(res.body._id).then((order) => {
+                    expect(order.username).to.equal("admin");
+                    expect(order._id.toString()).to.equal(res.body._id);
+                    expect(order.transaction_id).to.equal(response.id);
+                    
+                    User.findById(u._id).then((user) => {
+                      expect(user.history).to.have.length(1);
+                      expect(user.history[0]._id.toString()).to.equal(res.body._id);
+                      expect(user.history[0].transaction_id).to.equal(response.id);
+                      done();
+                    }).catch((err) => done(err))
                   }).catch((err) => done(err))
                 }).catch((err) => done(err))
               })

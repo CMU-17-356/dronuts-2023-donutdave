@@ -2,6 +2,8 @@ import { User } from '../models/user.js'
 import { Order } from '../models/order.js'
 import { Product } from '../models/product.js'
 import { Request, Response } from 'express'
+import { companyID, creditAPI } from '../index.js'
+import got from 'got'
 
 class UsersController {
   public getUsers = async (req: Request, res: Response) => {
@@ -152,6 +154,7 @@ class UsersController {
           user.cart.forEach((item) => {
             order.addItemToOrder(item.title, item.quantity)
           });
+
           // calculate order totals
           let isValid = true
           await Promise.all(order.items.map(async (item) => {
@@ -167,12 +170,23 @@ class UsersController {
           if (!isValid) {
             return res.status(500).json(`Invalid product in cart`)
           }
-
-          // add to order database and user's order history
           order.totals = totals
+
+          // redirect to payment API and save transaction ID
+          const response = await got.post(creditAPI, {
+            json: {
+              companyId: companyID,
+              amount: order.totals,
+            }
+          }).json()
+          // @ts-ignore
+          order.transaction_id = response.id
+   
+          // add to order database and user's order history
           user.history.push(order)
           await order.save()
           await user.save()
+
           return res.status(200).json(order)
         };
         return res.status(404).json(`User ${name} not found`)

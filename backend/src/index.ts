@@ -6,6 +6,8 @@ import { router } from './routes/routes.js';
 dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
+const companyID = "donutdave";
+const creditAPI = "https://356-credit-api.fly.dev/api/transactions"
 
 // connect to db
 var db_url = '???' // TODO: production url
@@ -35,4 +37,4 @@ const server = app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
 
-export { app, server } // for testing
+export { app, server, companyID, creditAPI } // for testing
