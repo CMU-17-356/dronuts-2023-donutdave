@@ -1,34 +1,35 @@
 // @ts-nocheck
-import { Product } from '../../src/models/product';
+import { Order } from '../../src/models/order';
 import { expect } from 'chai';
 import { app, server } from '../../src/index.js';
 import request from 'supertest';
 
 describe('Products', () => {
   beforeEach((done) => { // empty the database
-    Product.deleteMany({}, () => { 
+    Order.deleteMany({}, () => { 
       done() 
     });        
   });
 
-  describe('View product', () => {
-    it('1. View existing product', (done) => {
-      var p = new Product({ title: "Plain donut", price: "0.99" })
-      p.save().then(() => {
+  describe('View order', () => {
+    it('1. View existing order', (done) => {
+      var o = new Order({ username: "existing", totals: 10.28 })
+      o.save().then(() => {
         request(app)
-          .get('/api/products/plain_donut')
+          .get(`/api/orders/${o._id}`)
           .then((res) => {
             expect(res.statusCode).to.equal(200);
-            expect(res.body.title).to.equal("Plain donut");
+            expect(res.body.totals).to.equal(10.28);
             done();
           })
           .catch((err) => done(err))
       })
     });
 
-    it('2. View non-existing product', (done) => {
+    it('2. View non-existing order', (done) => {
+      var o = new Order({ username: "existing", totals: 10.28 }) // not saved
       request(app)
-        .get('/api/products/nonexisting')
+        .get(`/api/orders/${o._id}`)
         .then((res) => {
           expect(res.statusCode).to.equal(404);
           done();
@@ -36,17 +37,17 @@ describe('Products', () => {
         .catch((err) => done(err))
     });
 
-    it('3. View all products', (done) => {
-      var p1 = new Product({ title: "Plain donut", price: "0.99" })
-      var p2 = new Product({ title: "Chocolate donut", price: "1.99" })
-      p1.save().then(() => {
-        p2.save().then(() => {
-          request(app).get('/api/products')
+    it('3. View all orders', (done) => {
+      var o1 = new Order({ username: "admin1", totals: 10.28 })
+      var o2 = new Order({ username: "admin2", totals: 12.23 })
+      o1.save().then(() => {
+        o2.save().then(() => {
+          request(app).get('/api/orders')
             .then((res)=>{
               expect(res.statusCode).to.equal(200);
               expect(res.body).to.have.length(2);
-              expect(res.body[0].title).to.equal("Plain donut");
-              expect(res.body[1].title).to.equal("Chocolate donut");
+              expect(res.body[0]._id.toString()).to.equal(o1._id.toString());
+              expect(res.body[1]._id.toString()).to.equal(o2._id.toString());
               done();
             })
             .catch((err) => done(err))

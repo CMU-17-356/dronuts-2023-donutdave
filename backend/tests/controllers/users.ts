@@ -7,7 +7,7 @@ import { app, server } from '../../src/index.js';
 import request from 'supertest';
 
 describe('Users', () => {
-  beforeEach((done) => { //empty the database
+  beforeEach((done) => { // empty the database
     User.deleteMany({}, () => { 
       Product.deleteMany({}, () => {
         Order.deleteMany({}, () => {
