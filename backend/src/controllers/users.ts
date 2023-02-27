@@ -90,6 +90,50 @@ class UsersController {
         return res.status(500).json(err)
       });
   };
+
+  public viewUserCart = async (req: Request, res: Response) => {
+    let name = req.params.username
+    await User.findOne({username: name})
+      .then(user => {
+        if (user) {
+          return res.status(200).json(user.cart)
+        }
+        return res.status(404).json(`User ${name} not found`)
+      })
+      .catch(err => {
+        console.log("viewUserCart: " + err)
+        return res.status(500).json(err)
+      });
+  };
+
+  public modifyUserCart = async (req: Request, res: Response) => {
+    let name = req.params.username
+    await User.findOne({username: name})
+      .then(user => {
+        if (user) {
+          let items = req.body.items == null ? [] : req.body.items
+          let isAdd = req.body.isAdd == null ? true : req.body.isAdd
+          // @ts-ignore
+          items.forEach((item) => {
+            let quantity = item.quantity == null ? 1 : item.quantity
+            if (isAdd) {
+              // @ts-ignore
+              user.addItemToCart(item.name, quantity)
+            } else {
+              console.log(item.name)
+              // @ts-ignore
+              user.removeItemFromCart(item.name)
+            }
+          });
+          return res.status(201).json(`User ${name}'s cart updated successfully`);
+        }
+        return res.status(404).json(`User ${name} not found`)
+      })
+      .catch(err => {
+        console.log("modifyUserCart: " + err)
+        return res.status(500).json(err)
+      });
+  }
 }
 
 export { UsersController }

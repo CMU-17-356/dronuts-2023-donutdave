@@ -113,4 +113,17 @@ describe('Testing User model', function () {
       done();
     })
   })
+
+  it('9. Remove item from cart', function (done) {
+    var u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
+    u.validate(function () {
+      u.addItemToCart("Plain donut", 5);
+      u.removeItemFromCart("Plain donut");
+      expect(u.cart).to.have.length(0);
+
+      expect(function() { u.decrementItemQuantity("Plain donut"); }).to.throw(Error);
+      expect(function() { u.decrementItemQuantity("Chocolate donut"); }).to.throw(Error);
+      done();
+    })
+  })
 })

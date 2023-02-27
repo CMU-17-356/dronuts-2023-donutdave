@@ -19,6 +19,7 @@ interface IUserMethods {
   // if item with the same product name already exists in cart, increase its quantity by the specified amount
   // else, add the item to cart with the specified quantity (default to 1)
   addItemToCart(product_name: String, quantity: Number): void;
+  removeItemFromCart(product_name: String): void;
 
   // if item with the same product name already exists in cart, increase its quantity by 1
   // else, throw an error
@@ -78,12 +79,28 @@ userSchema.method('addItemToCart', function addItemToCart(pname, q=1) {
       this.cart[i].quantity += q
       this.save()
       hasFound = true
+      break
     };
   };
   if (!hasFound) {
     this.cart.push({product_name: pname, quantity: q})
     this.save() // TODO: this is causing tests to hang after completion
   }
+});
+
+userSchema.method('removeItemFromCart', function removeItemFromCart(pname) {
+  var hasFound = false
+  for (let i = 0; i < this.cart.length; i++) {
+    if (this.cart[i].product_name === pname) {
+      this.cart.splice(i, 1)
+      this.save()
+      hasFound = true
+      break
+    };
+  };
+  if (!hasFound) {
+    throw new Error('removeItemFromCart: item not found in cart')
+  };
 });
 
 userSchema.method('incrementItemQuantity', function incrementItemQuantity(pname) {
@@ -93,6 +110,7 @@ userSchema.method('incrementItemQuantity', function incrementItemQuantity(pname)
       this.cart[i].quantity += 1
       this.save()
       hasFound = true
+      break
     };
   };
   if (!hasFound) {
@@ -110,6 +128,7 @@ userSchema.method('decrementItemQuantity', function decrementItemQuantity(pname)
       };
       this.save()
       hasFound = true
+      break
     };
   };
   if (!hasFound) {

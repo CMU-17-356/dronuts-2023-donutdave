@@ -10,5 +10,7 @@ router.post('/users', Users.createUser)
 router.get('/users/:username', Users.getUserByUsername)
 router.delete('/users/:username', Users.deleteUserByUsername)
 router.patch('/users/:username', Users.updateUserByUsername)
+router.get('/users/:username/cart', Users.viewUserCart)
+router.patch('/users/:username/cart', Users.modifyUserCart)
 
 export { router }

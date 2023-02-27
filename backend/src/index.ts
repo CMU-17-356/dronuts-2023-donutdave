@@ -29,7 +29,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use(express.json())
-app.use('/api/v1', router)
+app.use('/api', router)
 
 const server = app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
