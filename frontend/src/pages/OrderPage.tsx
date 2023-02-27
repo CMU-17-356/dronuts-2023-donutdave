@@ -1,5 +1,3 @@
-// Written with assistance from ChatGPT
-
 import { Link } from 'react-router-dom';
 import React, { FC, useState } from "react";
 

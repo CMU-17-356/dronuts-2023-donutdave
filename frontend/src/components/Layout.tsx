@@ -6,7 +6,7 @@ type LayoutProps = {}
 
 function Layout (props : LayoutProps) {
     return (
-        <div style={{ border: 2, padding: 2, borderColor: 'black', borderStyle: 'dashed', margin: 5, width: 500, height: 500 }}>
+        <div style={{ border: 2, padding: 2, margin: 5}}>
             <Outlet /> 
         </div>
     );
