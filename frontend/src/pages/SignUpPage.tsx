@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -10,6 +11,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+import Dialog from '@mui/material/Dialog';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 function Copyright(props: any) {
   return (
@@ -24,16 +29,40 @@ function Copyright(props: any) {
   );
 }
 
+export interface SimpleDialogProps {
+  open: boolean;
+  selectedValue: string;
+  onClose: (value: string) => void;
+}
+
+function SimpleDialog(props: SimpleDialogProps) {
+  const { onClose, selectedValue, open } = props;
+
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
+
+  return (
+    <Dialog onClose={handleClose} open={open}>
+      <Alert severity="success">
+        <AlertTitle>Account created!</AlertTitle>
+      </Alert>
+    </Dialog>
+  );
+}
+
 const theme = createTheme();
 
 function SignUpPage() {
+  const [open, setOpen] = React.useState(false);
+  const selectedValue = "test";
+  const handleClose = (value: string) => {
+    setOpen(false);
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    setOpen(true);
   };
 
   return (
@@ -48,6 +77,8 @@ function SignUpPage() {
             alignItems: 'center',
           }}
         >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
@@ -100,6 +131,11 @@ function SignUpPage() {
             >
               Sign Up
             </Button>
+            <SimpleDialog 
+              selectedValue={selectedValue}
+              open={open}
+              onClose={handleClose}
+            />
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="#" variant="body2">
