@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Button,  { ButtonProps } from '@mui/material/Button';
+import Button from '@mui/material/Button';
 
 type HomePageProps = {}
 
