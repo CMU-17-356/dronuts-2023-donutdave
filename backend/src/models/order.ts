@@ -5,20 +5,18 @@ import { Model, Schema, model } from 'mongoose'
 interface IOrder {
   username: String;
   items: [{
-    product_name: String;
+    title: String;
     quantity: Number;
   }];
   totals: Number;
   address: String;
+  transaction_id: String;
 };
 
 interface IOrderMethods {
   // if item with the same product name already exists in order, throw an error
   // else, add the item to order with the specified quantity (default to 1)
-  addItemToOrder(product_name: String, quantity: Number): void;
-
-  // TODO: recalculate the current totals and return it
-  updateAndGetTotals(): Number;
+  addItemToOrder(title: String, quantity: Number): void;
 };
 
 type OrderModel = Model<IOrder, {}, IOrderMethods>
@@ -30,7 +28,7 @@ const orderSchema = new Schema<IOrder, OrderModel, IOrderMethods>({
   },
   items: {
     type: [{
-      product_name: {
+      title: {
         type: String,
         required: true,
       },
@@ -53,16 +51,19 @@ const orderSchema = new Schema<IOrder, OrderModel, IOrderMethods>({
     type: String,
     default: "",
   },
+  transaction_id: {
+    type: String,
+    default: "",
+  }
 });
 
-orderSchema.method('addItemToOrder', function addItemToOrder(pname, q=1) {
+orderSchema.method('addItemToOrder', function addItemToOrder(title, q=1) {
   for (let i = 0; i < this.items.length; i++) {
-    if (this.items[i].product_name === pname) {
+    if (this.items[i].title === title) {
       throw new Error('addItemToOrder: item already exists in order')
     };
   };
-  this.items.push({product_name: pname, quantity: q});
-  this.save(); // TODO: this is causing tests to hang after completion
+  this.items.push({title: title, quantity: q});
 });
 
 // orderSchema.plugin(sanitizerPlugin);

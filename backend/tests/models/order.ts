@@ -14,7 +14,7 @@ describe('Testing making new order', function () {
   })
 
   it('2. Invalid if non-integer quantity in any item', function (done) {
-    var o = new Order({ username: "admin", items: [{product_name: "Plain donut", quantity: 0.5}] })
+    var o = new Order({ username: "admin", items: [{title: "Plain donut", quantity: 0.5}] })
     o.validate(function(err) {
       if (err) {
         // @ts-ignore 
@@ -42,12 +42,12 @@ describe('Testing making new order', function () {
       
       o.addItemToOrder("Plain donut", 2);
       expect(o.items).to.have.length(1);
-      expect(o.items[0].product_name).to.equal("Plain donut");
+      expect(o.items[0].title).to.equal("Plain donut");
       expect(o.items[0].quantity).to.equal(2);
 
       o.addItemToOrder("Chocolate donut");
       expect(o.items).to.have.length(2);
-      expect(o.items[1].product_name).to.equal("Chocolate donut");
+      expect(o.items[1].title).to.equal("Chocolate donut");
       expect(o.items[1].quantity).to.equal(1);
 
       expect(function() { o.addItemToOrder("Plain donut"); }).to.throw(Error);
