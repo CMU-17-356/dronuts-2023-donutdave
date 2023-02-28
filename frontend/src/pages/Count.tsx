@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { BsCart2 } from 'react-icons/bs';
+import { useState } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 
 const Count = () => {
@@ -12,11 +11,6 @@ const Count = () => {
     setCount(count + 1);
   };
 
-//   const addChart = () => {
-//     const get = JSON.parse(localStorage.getItem('data')) || null;
-//     localStorage.setItem('data', JSON.stringify(get + count));
-//     window.location.reload();
-//   };
   return (
     <>
       <div className="flex flex-col md:flex-row gap-4 w-full">
@@ -33,16 +27,7 @@ const Count = () => {
             <FaPlus size={16} className="text-oranges" aria-label="Plus" />
           </button>
         </div>
-        {/* <button
-        //   onClick={addChart}
-          disabled={count === 0 || (count < 0 && true)}
-          className="w-full md:max-w-[272px] relative py-4 rounded-lg shadow-2xl shadow-oranges bg-oranges flex 
-          justify-center items-center gap-5 after:rounded-lg hover:after:visible after:invisible disabled:hover:after:invisible after:transition-all 
-          after:duration-100 after:ease-in after:w-full after:h-full after:bg-opacity-30 after:absolute after:bg-white after:top-0"
-        >
-          <BsCart2 className="text-white" />
-          {/* <span className="text-white">Add to cart</span> 
-        </button> */}
+
       </div>
     </>
   );
