@@ -1,6 +1,6 @@
-FROM node:18.14 as builder
+FROM node:18.14.2 as builder
 
-ARG NODE_VERSION=14.17.6
+ARG NODE_VERSION=18.14.2
 
 WORKDIR /react-app
 COPY package*.json .

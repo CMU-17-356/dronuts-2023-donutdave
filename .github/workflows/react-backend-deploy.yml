@@ -1,12 +1,11 @@
-name: Deploy Frontend to Fly
-
+name: Deploy Backend to Fly
 
 on:
   push:
     branches:
     - master
     - main
-    - frontend-deployment
+    - backend-deployment
   pull_request:
     branches:
     - master
@@ -18,14 +17,14 @@ defaults:
 
 jobs:
   deploy:
-    name: Deploy frontend
+    name: Deploy backend
     runs-on: ubuntu-latest
     steps:
       # This step checks out a copy of your repository.
       - uses: actions/checkout@v2
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: | 
-          cd frontend
+          cd backend
           flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
