@@ -3,10 +3,12 @@ name: Deploy to Fly
 on:
   push:
     branches:
+    - master
     - main
     - frontend-deployment
   pull_request:
     branches:
+    - master
     - main
 
 defaults:
