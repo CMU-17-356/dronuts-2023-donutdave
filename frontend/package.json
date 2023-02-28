@@ -45,5 +45,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.21.0",
+    "@types/react-test-renderer": "^18.0.0",
+    "react-test-renderer": "^18.2.0"
   }
 }
