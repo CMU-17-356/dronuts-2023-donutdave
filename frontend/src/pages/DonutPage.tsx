@@ -23,7 +23,6 @@ function Form() {
   return (
     <form onSubmit={handleSubmit}>
       <Typography> Quantity </Typography>
-      <TextField inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} />
       <Count/>
       <Button type="submit">Add to Cart</Button>
     </form>

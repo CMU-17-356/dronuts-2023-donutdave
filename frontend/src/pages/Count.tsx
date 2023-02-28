@@ -1,3 +1,5 @@
+// code adapated from https://github.com/devina36/ecommerce-product-page/blob/main/src/index.css
+
 import { useState } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 
