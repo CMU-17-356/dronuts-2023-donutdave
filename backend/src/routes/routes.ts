@@ -24,6 +24,6 @@ router.get('/orders', Orders.getOrders)
 router.get('/orders/:id', Orders.getOrderById)
 
 router.get('/products', Products.getProducts)
-router.get('/products/:title', Products.getProductByName)
+router.get('/products/:title', Products.getProductByTitle)
 
 export { router }

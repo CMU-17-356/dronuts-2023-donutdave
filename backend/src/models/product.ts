@@ -4,12 +4,18 @@ import { Schema, model } from 'mongoose'
 
 interface IProduct {
   title: String;
+  display_name: String;
   price: Number;
   image: String;
 };
 
 const productSchema = new Schema({
   title: {
+    type: String,
+    required: true,
+    match: /^[a-z0-9_]+$/,
+  },
+  display_name: {
     type: String,
     required: true,
   },
