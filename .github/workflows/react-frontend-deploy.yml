@@ -9,6 +9,10 @@ on:
     branches:
     - main
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   deploy:
     name: Deploy proxy
