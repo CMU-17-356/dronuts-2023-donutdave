@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Button,  { ButtonProps } from '@mui/material/Button';
 
 type HomePageProps = {}
 
@@ -7,13 +8,9 @@ function HomePage (props : HomePageProps) {
         <div>
             <p>This is the home page.</p>
             <p>
-                <Link to="/employee">Go to the Employee Page!</Link>
-                <br></br>
-                <Link to="/customer">Go to the Customer Page!</Link>
-                <br></br>
-                <Link to="/signup">Go to the Sign Up Page!</Link>
-                <br></br>
-                <Link to="/checkout">Go to the Checkout Page!</Link>
+            <Link to="/employee"> <Button >Employee Page</Button></Link>
+            <Link to="/customer"> <Button >Customer Page</Button></Link>
+            <Link to="/signup"> <Button >Sign Up</Button></Link>
             </p>
 
         </div>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import React, { FC, useState } from "react";
+import Button from '@mui/material/Button';
 
 type OrderPageProps = {}
 
@@ -67,6 +68,9 @@ function OrderPage (props : OrderPageProps) {
     return (
         <div >
             <p>This is the order page.</p>
+            <Link to="/employee"> <Button >Employee Page</Button></Link>
+            <Link to="/customer"> <Button >Customer Page</Button></Link>
+            <Link to="/signup"> <Button >Sign Up</Button></Link>
             <p>
                 <Link to="/employee">back</Link>
             </p>
