@@ -1,5 +1,14 @@
 name: Deploy to Fly
-on: [push]
+
+on:
+  push:
+    branches:
+    - main
+    - frontend-deployment
+  pull_request:
+    branches:
+    - main
+
 jobs:
   deploy:
     name: Deploy proxy
