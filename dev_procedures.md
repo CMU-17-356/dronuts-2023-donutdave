@@ -1,3 +1,4 @@
+Procedures:
 - Starting a new task:
     1. Create a new issue
     2. Assign it
