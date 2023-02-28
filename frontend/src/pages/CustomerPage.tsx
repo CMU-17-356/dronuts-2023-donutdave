@@ -19,8 +19,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 type CustomerPageProps = {}
   
 
-
-const nums = [1,2,3];
+const cards = ["./apple_krumb.jpg"]
+const nums = [0,1,2];
 
 
 const theme = createTheme();
@@ -42,50 +42,11 @@ function CustomerPage (props : CustomerPageProps) {
         <Typography gutterBottom variant="h5" component="h2">
                       Past Orders
           </Typography>
-          {/* End hero unit */}
           <Grid container spacing={4}>
-            {nums.map((n) => ( 
-              <Grid item key={n} xs={12} sm={6} md={4}>
+            {/* {nums.map((n) => ( 
+              <Grid item key={n} xs={12} sm={6} md={4}> */}
                 <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      // 16:9
-                      pt: '0.25%',
-                    }}
-                    image={require("./apple_krumb.jpg")}
-                    alt="random"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                    Apple Krumb
-                    </Typography>
-                    <Typography>
-                      Delicious. Creamy. Irresitable.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                  <Link to="/donut"><Button size="small">Order Again</Button></Link>
-                    
-                  </CardActions>
-                </Card>
-                
-               </Grid>
-            ))}
-          </Grid> 
-        </Container>
-        <Container sx={{ py: 8 }} maxWidth="md">
-        <Typography gutterBottom variant="h5" component="h2">
-                      New Donuts
-          </Typography>
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {nums.map((n) => ( 
-              <Grid item key={n} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                  sx={{ height: '30%', width: '25%', display: 'inline-block', flexDirection: 'column', padding: '0px', margin: '30px' }}
                 >
                   <CardMedia
                     component="img"
@@ -109,9 +70,151 @@ function CustomerPage (props : CustomerPageProps) {
                     
                   </CardActions>
                 </Card>
-                
-               </Grid>
-            ))}
+                <Card
+                  sx={{ height: '40%', width: '28%', display: 'inline-block', flexDirection: 'column', padding: '0px', margin: '30px'  }}
+                >
+                  <CardMedia
+                    component="img"
+                    sx={{
+                      // 16:9
+                      pt: '0.25%',
+                    }} 
+                    image={require("./chocolate_glaze.jpg")}
+                    alt="random"
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                    Chocolate Glaze
+                    </Typography>
+                    <Typography>
+                      Chocolate Galore
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                  <Link to="/donut"><Button size="small">Order</Button></Link>
+                    
+                  </CardActions>
+                </Card>
+
+                <Card
+                  sx={{ height: '30%', width: '25%', display: 'inline-block', flexDirection: 'column', padding: '0px', margin: '30px'  }}
+                >
+                  <CardMedia
+                    component="img"
+                    sx={{
+                      // 16:9
+                      pt: '0.25%',
+                    }} 
+                    image={require("./bavarian_kreme-1.jpg")}
+                    alt="random"
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                    Bavarian Kreme
+                    </Typography>
+                    <Typography>
+                      Delicious. Kreamy. Irresitable.
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                  <Link to="/donut"><Button size="small">Order</Button></Link>
+                    
+                  </CardActions>
+                </Card>
+               {/* </Grid>
+            ))} */}
+          </Grid> 
+          
+        </Container>
+        
+        <Container sx={{ py: 8 }} maxWidth="md">
+        <Typography  variant="h5" component="h2" >
+                      New Donuts
+          </Typography>
+        
+          {/* End hero unit */}
+
+          <Grid container spacing={4}>
+            {/* {nums.map((n) => ( 
+              <Grid item key={n} xs={12} sm={6} md={4}> */}
+                <Card
+                  sx={{ height: '40%', width: '28%', display: 'inline-block', flexDirection: 'column', padding: '0px', margin: '30px' }}
+                >
+                  <CardMedia
+                    component="img"
+                    sx={{
+                      // 16:9
+                      pt: '0.25%',
+                    }} 
+                    image={require("./blueberry.jpg")}
+                    alt="random"
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                    Blueberry
+                    </Typography>
+                    <Typography>
+                      Fresh blueberries!
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                  <Link to="/donut"><Button size="small">Order</Button></Link>
+                    
+                  </CardActions>
+                </Card>
+                <Card
+                  sx={{ height: '30%', width: '25%', display: 'inline-block', flexDirection: 'column', padding: '0px', margin: '30px'  }}
+                >
+                  <CardMedia
+                    component="img"
+                    sx={{
+                      // 16:9
+                      pt: '0.25%',
+                    }} 
+                    image={require("./boston_kreme.jpg")}
+                    alt="random"
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                    Boston Kreme
+                    </Typography>
+                    <Typography>
+                      Donut made in Pittsburgh not Boston.
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                  <Link to="/donut"><Button size="small">Order</Button></Link>
+                    
+                  </CardActions>
+                </Card>
+
+                <Card
+                  sx={{ height: '30%', width: '25%', display: 'inline-block', flexDirection: 'column', padding: '0px', margin: '30px'  }}
+                >
+                  <CardMedia
+                    component="img"
+                    sx={{
+                      // 16:9
+                      pt: '0.25%',
+                    }} 
+                    image={require("./chocolate_frosted.jpg")}
+                    alt="random"
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                    Chocolate Frosted
+                    </Typography>
+                    <Typography>
+                      Chocolate AND Frosted
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                  <Link to="/donut"><Button size="small">Order</Button></Link>
+                    
+                  </CardActions>
+                </Card>
+               {/* </Grid>
+            ))} */}
           </Grid> 
         </Container>
       </main>
