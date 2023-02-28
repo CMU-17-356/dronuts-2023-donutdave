@@ -19,9 +19,6 @@ function Form() {
     setText('');
   };
 
-  const handleTextChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setText(event.target.value);
-  };
 
   return (
     <form onSubmit={handleSubmit}>

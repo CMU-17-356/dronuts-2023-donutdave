@@ -19,8 +19,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 type CustomerPageProps = {}
   
 
-const cards = ["./apple_krumb.jpg"]
-const nums = [0,1,2];
 
 
 const theme = createTheme();
