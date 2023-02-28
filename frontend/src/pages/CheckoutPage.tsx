@@ -58,6 +58,14 @@ export default function CheckoutPage() {
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
+    if (activeStep === 2) {
+      fetch('https://356-credit-api.fly.dev/api/transactions/1/process', {
+        method: 'POST',
+      })
+      .catch(err => {
+        console.error(err)
+      });
+    }
   };
 
   const handleBack = () => {
