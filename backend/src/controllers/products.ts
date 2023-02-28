@@ -13,18 +13,16 @@ class ProductsController {
       });
   }
 
-  public getProductByName = async (req: Request, res: Response) => {
-    let title = req.params.title.replaceAll("_", " ")
-
-    await Product.findOne({title: {$regex: new RegExp(title), $options: 'i'}})
+  public getProductByTitle = async (req: Request, res: Response) => {
+    await Product.findOne({title: req.params.title})
       .then(product => {
         if (product) {
           return res.status(200).json(product)
         }
-        return res.status(404).json(`Product ${title} not found`)
+        return res.status(404).json(`Product ${req.params.title} not found`)
       })
       .catch(err => {
-        console.log("getProductByName: " + err)
+        console.log("getProductByTitle: " + err)
         return res.status(500).json(err)
       });
   };

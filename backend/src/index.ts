@@ -10,13 +10,14 @@ const companyID = "donutdave";
 const creditAPI = "https://356-credit-api.fly.dev/api/transactions"
 
 // connect to db
-var db_url = '???' // TODO: production url
+var db_url = 'mongodb+srv://xinyao:20001028@cluster0.kwf9tsb.mongodb.net/proddb?retryWrites=true&w=majority'
 if (app.get('env') === 'development') {
   console.log(`⚡️connecting to development db`)
-  db_url = 'mongodb://localhost:27017/donutdave_db'
+  db_url = 'mongodb+srv://xinyao:20001028@cluster0.kwf9tsb.mongodb.net/devdb?retryWrites=true&w=majority'
 } else if (app.get('env') === 'test') {
   console.log(`⚡️connecting to test db`)
   db_url = 'mongodb://localhost:27017/donutdave_testdb'
+  // db_url = 'mongodb+srv://xinyao:20001028@cluster0.kwf9tsb.mongodb.net/testdb?retryWrites=true&w=majority'
 };
 mongoose
   .connect(db_url)

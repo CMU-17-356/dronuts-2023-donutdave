@@ -4,7 +4,7 @@ import { expect } from 'chai';
 
 describe('Testing making new product', function () {
   it('1. Invalid if no title', function (done) {
-    var p = new Product({ price: "0.99" })
+    var p = new Product({ price: "0.99", display_name: "Plain donut" })
     p.validate(function(err) {
       if (err) {
         expect(err.errors.title).to.exist; 
@@ -14,7 +14,7 @@ describe('Testing making new product', function () {
   })
 
   it('2. Invalid if no price', function (done) {
-    var p = new Product({ title: "Plain donut" })
+    var p = new Product({ title: "plain", display_name: "Plain donut" })
     p.validate(function(err) {
       if (err) {
         expect(err.errors.price).to.exist;
@@ -23,8 +23,18 @@ describe('Testing making new product', function () {
     });
   })
 
-  it('3. Invalid if price is not positive', function (done) {
-    var p = new Product({ title: "Plain donut", price: "-0.01"})
+  it('3. Invalid if no display name', function (done) {
+    var p = new Product({ title: "plain", price: "0.99" })
+    p.validate(function(err) {
+      if (err) {
+        expect(err.errors.display_name).to.exist;
+        done();
+      }
+    });
+  })
+
+  it('4. Invalid if price is not positive', function (done) {
+    var p = new Product({ title: "plain", display_name: "Plain donut", price: "-0.01" })
     p.validate(function(err) {
       if (err) {
         expect(err.errors.price).to.exist;
@@ -34,9 +44,10 @@ describe('Testing making new product', function () {
   })
 
   it('4. Creating new product', function (done) {
-    var p = new Product({ title: "Plain donut", price: "0.99" })
+    var p = new Product({ title: "plain", display_name: "Plain donut", price: "0.99" })
     p.validate(function () {
       expect(p.title).to.exist;
+      expect(p.display_name).to.exist;
       expect(p.price).to.exist;
       expect(p.image).to.exist;
       done();
