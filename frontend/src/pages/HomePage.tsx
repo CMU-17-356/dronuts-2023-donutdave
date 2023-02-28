@@ -12,6 +12,8 @@ function HomePage (props : HomePageProps) {
                 <Link to="/customer">Go to the Customer Page!</Link>
                 <br></br>
                 <Link to="/signup">Go to the Sign Up Page!</Link>
+                <br></br>
+                <Link to="/checkout">Go to the Checkout Page!</Link>
             </p>
 
         </div>

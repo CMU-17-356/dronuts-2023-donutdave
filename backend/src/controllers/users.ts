@@ -1,9 +1,13 @@
 import { User } from '../models/user.js'
+import { Order } from '../models/order.js'
+import { Product } from '../models/product.js'
 import { Request, Response } from 'express'
+import { companyID, creditAPI } from '../index.js'
+import got from 'got'
 
 class UsersController {
   public getUsers = async (req: Request, res: Response) => {
-    await User.find({})
+    User.find({})
       .then(users => {
         return res.status(200).json(users)
       })
@@ -21,7 +25,7 @@ class UsersController {
     if (u) return res.status(400).json(`Username ${body.username} already existed`)
       
     const user = new User(body)
-    await user.save()
+    user.save()
       .then(() => {
         res.status(201).json(`User ${body.username} created successfully`);
       })
@@ -41,7 +45,7 @@ class UsersController {
   
   public getUserByUsername = async (req: Request, res: Response) => {
     let name = req.params.username
-    await User.findOne({username: name})
+    User.findOne({username: name})
       .then(user => {
         if (user) {
           return res.status(200).json(user)
@@ -77,7 +81,7 @@ class UsersController {
   
   public deleteUserByUsername = async (req: Request, res: Response) => {
     let name = req.params.username
-    await User.deleteOne({username: req.params.username})
+    User.deleteOne({username: req.params.username})
       .then((result) => {
         if (result.deletedCount > 0) {
           return res.status(200).json(`User ${name} deleted`)
@@ -90,6 +94,124 @@ class UsersController {
         return res.status(500).json(err)
       });
   };
+
+  public getUserCart = async (req: Request, res: Response) => {
+    let name = req.params.username
+    User.findOne({username: name})
+      .then(user => {
+        if (user) {
+          return res.status(200).json(user.cart)
+        }
+        return res.status(404).json(`User ${name} not found`)
+      })
+      .catch(err => {
+        console.log("viewUserCart: " + err)
+        return res.status(500).json(err)
+      });
+  };
+
+  public modifyUserCart = async (req: Request, res: Response) => {
+    let name = req.params.username
+    User.findOne({username: name})
+      .then(async (user) => {
+        if (user) {
+          let items = req.body.items == null ? [] : req.body.items
+          let isAdd = req.body.isAdd == null ? true : req.body.isAdd
+          // @ts-ignore
+          items.forEach((item) => {
+            let quantity = item.quantity == null ? 1 : item.quantity
+            if (isAdd) {
+              // @ts-ignore
+              user.addItemToCart(item.title, quantity)
+            } else {
+              // @ts-ignore
+              user.removeItemFromCart(item.title)
+            };
+          });
+          await user.save();
+          return res.status(201).json(`User ${name}'s cart updated successfully`);
+        };
+        return res.status(404).json(`User ${name} not found`)
+      })
+      .catch(err => {
+        console.log("modifyUserCart: " + err)
+        return res.status(500).json(err)
+      });
+  }
+
+  public checkoutUserCart = async (req: Request, res: Response) => {
+    let name = req.params.username
+    User.findOne({username: name})
+      .then(async (user) => {
+        if (user) {
+          if (user.cart.length < 1) {
+            return res.status(404).json(`Cannot checkout empty cart`)
+          }
+
+          // fill in order details
+          let order = new Order({ username: name })
+          let totals = 0.0
+          user.cart.forEach((item) => {
+            order.addItemToOrder(item.title, item.quantity)
+          });
+
+          // calculate order totals
+          let isValid = true
+          await Promise.all(order.items.map(async (item) => {
+            let product = await Product.findOne({title: item.title});
+            if (product) {
+              // @ts-ignore
+              totals += product.price * item.quantity
+            } else {
+              isValid = false
+            }
+          }));
+
+          if (!isValid) {
+            return res.status(500).json(`Invalid product in cart`)
+          }
+          order.totals = totals
+
+          // redirect to payment API and save transaction ID
+          const response = await got.post(creditAPI, {
+            json: {
+              companyId: companyID,
+              amount: order.totals,
+            }
+          }).json()
+          // @ts-ignore
+          order.transaction_id = response.id
+   
+          // add to order database and user's order history
+          user.history.push(order)
+          await order.save()
+          await user.save()
+
+          return res.status(200).json(order)
+        };
+        return res.status(404).json(`User ${name} not found`)
+      })
+      .catch(err => {
+        console.log("checkoutUserCart: " + err)
+        return res.status(500).json(err)
+      });
+  };
+
+  public getUserOrderHistory = async (req: Request, res: Response) => {
+    let name = req.params.username
+    User.findOne({username: name})
+      .then(user => {
+        if (user) {
+          return res.status(200).json(user.history)
+        }
+        return res.status(404).json(`User ${name} not found`)
+      })
+      .catch(err => {
+        console.log("getUserOrderHistory: " + err)
+        return res.status(500).json(err)
+      });
+  };
+  
 }
 
 export { UsersController }
