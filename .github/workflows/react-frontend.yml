@@ -21,7 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: superfly/flyctl-actions/setup-flyctl@master
     - name: Set up Node.js 18.x
       uses: actions/setup-node@v3
       with:
@@ -51,6 +50,7 @@ jobs:
         npm run build
 
     - name: Deploy app
+      uses: superfly/flyctl-actions/setup-flyctl@master
       run: |
         cd frontend
         fly deploy --remote-only
