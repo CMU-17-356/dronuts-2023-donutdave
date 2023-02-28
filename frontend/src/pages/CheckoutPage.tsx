@@ -18,10 +18,10 @@ import Review from '../components/Review';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
+    <Typography variant="body2" color="text.secondary" align="center"> 
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Donut Dave
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -44,7 +44,14 @@ function getStepContent(step: number) {
   }
 }
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#EF72AC',
+      contrastText: '#FBF5F3',
+    },
+  },
+});
 
 export default function CheckoutPage() {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -62,7 +69,7 @@ export default function CheckoutPage() {
       <CssBaseline />
       <AppBar
         position="absolute"
-        color="default"
+        color="primary"
         elevation={0}
         sx={{
           position: 'relative',
@@ -70,13 +77,13 @@ export default function CheckoutPage() {
         }}
       >
         <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Company name
+          <Typography variant="h6" noWrap>
+            Donut Dave
           </Typography>
         </Toolbar>
       </AppBar>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }}}>
           <Typography component="h1" variant="h4" align="center">
             Checkout
           </Typography>
@@ -93,9 +100,7 @@ export default function CheckoutPage() {
                 Thank you for your order.
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
+                Your order number is #2001539. We will send you an update when your order is airborne.
               </Typography>
             </React.Fragment>
           ) : (
