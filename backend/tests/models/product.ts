@@ -23,7 +23,17 @@ describe('Testing making new product', function () {
     });
   })
 
-  it('3. Creating new product', function (done) {
+  it('3. Invalid if price is not positive', function (done) {
+    var p = new Product({ title: "Plain donut", price: "-0.01"})
+    p.validate(function(err) {
+      if (err) {
+        expect(err.errors.price).to.exist;
+        done();
+      }
+    });
+  })
+
+  it('4. Creating new product', function (done) {
     var p = new Product({ title: "Plain donut", price: "0.99" })
     p.validate(function () {
       expect(p.title).to.exist;

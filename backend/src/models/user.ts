@@ -9,7 +9,7 @@ interface IUser {
   full_name: String;
   history: [IOrder];
   cart: [{
-    product_name: String;
+    title: String;
     quantity: Number;
   }];
 };
@@ -18,15 +18,16 @@ interface IUser {
 interface IUserMethods {
   // if item with the same product name already exists in cart, increase its quantity by the specified amount
   // else, add the item to cart with the specified quantity (default to 1)
-  addItemToCart(product_name: String, quantity: Number): void;
+  addItemToCart(title: String, quantity: Number): void;
+  removeItemFromCart(title: String): void;
 
   // if item with the same product name already exists in cart, increase its quantity by 1
   // else, throw an error
-  incrementItemQuantity(product_name: String): void;
+  incrementItemQuantity(title: String): void;
   // if item with the same product name already exists in cart, decrease its quantity by 1,
   // and remove it from cart if quantity is zero
   // else, throw an error
-  decrementItemQuantity(product_name: String): void;
+  decrementItemQuantity(title: String): void;
 
   // TODO: Add an order to the user's history
   addOrderToHistory(order: IOrder): void;
@@ -54,7 +55,7 @@ const userSchema: Schema = new Schema<IUser, UserModel, IUserMethods>({
   },
   cart: {
     type: [{
-      product_name: {
+      title: {
         type: String,
         required: true,
       },
@@ -71,28 +72,41 @@ const userSchema: Schema = new Schema<IUser, UserModel, IUserMethods>({
   },
 });
 
-userSchema.method('addItemToCart', function addItemToCart(pname, q=1) {
+userSchema.method('addItemToCart', function addItemToCart(title, q=1) {
   var hasFound = false
   for (let i = 0; i < this.cart.length; i++) {
-    if (this.cart[i].product_name === pname) {
+    if (this.cart[i].title === title) {
       this.cart[i].quantity += q
-      this.save()
       hasFound = true
+      break
     };
   };
   if (!hasFound) {
-    this.cart.push({product_name: pname, quantity: q})
-    this.save() // TODO: this is causing tests to hang after completion
+    this.cart.push({title: title, quantity: q})
   }
 });
 
-userSchema.method('incrementItemQuantity', function incrementItemQuantity(pname) {
+userSchema.method('removeItemFromCart', function removeItemFromCart(title) {
   var hasFound = false
   for (let i = 0; i < this.cart.length; i++) {
-    if (this.cart[i].product_name === pname) {
-      this.cart[i].quantity += 1
-      this.save()
+    if (this.cart[i].title === title) {
+      this.cart.splice(i, 1)
       hasFound = true
+      break
+    };
+  };
+  if (!hasFound) {
+    throw new Error('removeItemFromCart: item not found in cart')
+  };
+});
+
+userSchema.method('incrementItemQuantity', function incrementItemQuantity(title) {
+  var hasFound = false
+  for (let i = 0; i < this.cart.length; i++) {
+    if (this.cart[i].title === title) {
+      this.cart[i].quantity += 1
+      hasFound = true
+      break
     };
   };
   if (!hasFound) {
@@ -100,16 +114,16 @@ userSchema.method('incrementItemQuantity', function incrementItemQuantity(pname)
   };
 });
 
-userSchema.method('decrementItemQuantity', function decrementItemQuantity(pname) {
+userSchema.method('decrementItemQuantity', function decrementItemQuantity(title) {
   var hasFound = false
   for (let i = 0; i < this.cart.length; i++) {
-    if (this.cart[i].product_name === pname) {
+    if (this.cart[i].title === title) {
       this.cart[i].quantity -= 1
       if (this.cart[i].quantity == 0) {
         this.cart.splice(i, 1)
       };
-      this.save()
       hasFound = true
+      break
     };
   };
   if (!hasFound) {

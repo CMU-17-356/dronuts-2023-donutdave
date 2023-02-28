@@ -16,6 +16,7 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "got": "^12.5.3",
     "mongoose": "^6.9.1",
     "mongoose-sanitizer": "^1.0.0",
     "mongoose-sanitizer-plugin": "^1.1.0",

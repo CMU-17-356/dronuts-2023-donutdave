@@ -62,12 +62,12 @@ describe('Testing User model', function () {
       
       u.addItemToCart("Plain donut");
       expect(u.cart).to.have.length(1);
-      expect(u.cart[0].product_name).to.equal("Plain donut");
+      expect(u.cart[0].title).to.equal("Plain donut");
       expect(u.cart[0].quantity).to.equal(1);
 
       u.addItemToCart("Chocolate donut", 10);
       expect(u.cart).to.have.length(2);
-      expect(u.cart[1].product_name).to.equal("Chocolate donut");
+      expect(u.cart[1].title).to.equal("Chocolate donut");
       expect(u.cart[1].quantity).to.equal(10);
       
       done();
@@ -79,7 +79,7 @@ describe('Testing User model', function () {
     u.validate(function () {
       u.addItemToCart("Plain donut", 5);
       expect(u.cart).to.have.length(1);
-      expect(u.cart[0].product_name).to.equal("Plain donut");
+      expect(u.cart[0].title).to.equal("Plain donut");
       expect(u.cart[0].quantity).to.equal(5);
 
       u.addItemToCart("Plain donut");
@@ -94,7 +94,7 @@ describe('Testing User model', function () {
     u.validate(function () {
       u.addItemToCart("Plain donut", 1);
       expect(u.cart).to.have.length(1);
-      expect(u.cart[0].product_name).to.equal("Plain donut");
+      expect(u.cart[0].title).to.equal("Plain donut");
       expect(u.cart[0].quantity).to.equal(1);
 
       u.incrementItemQuantity("Plain donut");
@@ -110,6 +110,19 @@ describe('Testing User model', function () {
 
       expect(function() { u.decrementItemQuantity("Plain donut"); }).to.throw(Error);
       expect(function() { u.incrementItemQuantity("Chocolate donut"); }).to.throw(Error)
+      done();
+    })
+  })
+
+  it('9. Remove item from cart', function (done) {
+    var u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
+    u.validate(function () {
+      u.addItemToCart("Plain donut", 5);
+      u.removeItemFromCart("Plain donut");
+      expect(u.cart).to.have.length(0);
+
+      expect(function() { u.decrementItemQuantity("Plain donut"); }).to.throw(Error);
+      expect(function() { u.decrementItemQuantity("Chocolate donut"); }).to.throw(Error);
       done();
     })
   })
