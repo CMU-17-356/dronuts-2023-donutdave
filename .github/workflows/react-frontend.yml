@@ -3,7 +3,14 @@
 
 name: Run linter, tests, and build script for React frontend
 
-on: push
+on:
+  push:
+    branches:
+    - main
+    - frontend-deployment
+  pull_request:
+    branches:
+    - main
 
 defaults:
   run:
@@ -42,3 +49,8 @@ jobs:
       run: |
         cd frontend
         npm run build
+
+    - name: Deploy app
+      run: |
+        cd frontend
+        fly deploy
