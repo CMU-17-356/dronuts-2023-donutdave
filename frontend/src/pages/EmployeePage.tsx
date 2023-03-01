@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 type EmployeePageProps = {}
   
 function EmployeePage (props : EmployeePageProps) {
   return (
         <div >
-            <p>This is the employee page.</p>
             <p>
-                <Link to="/">Go to the Home Page!</Link>
+            <Link to="/employee"> <Button >Employee Page</Button></Link>
+            <Link to="/customer"> <Button >Customer Page</Button></Link>
+            <Link to="/signup"> <Button >Sign Up</Button></Link>
             </p>
             <div style={{display: 'flex', justifyContent: 'center', padding: 30}}>
               <table>
