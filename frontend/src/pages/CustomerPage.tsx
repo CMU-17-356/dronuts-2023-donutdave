@@ -5,77 +5,55 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DonutCard from '../components/DonutCard';
+import DonutsToDisplay from '../components/DonutsToDisplay';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import IconButton from '@mui/material/IconButton';
+import { useState } from 'react';
+import Cart from '../components/Cart';
+import Product from '../components/Product';
+import CartModal from '../components/CartModal';
 
 type CustomerPageProps = {}
 
 const theme = createTheme();
 
 function CustomerPage (props : CustomerPageProps) {
-
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const initCart = new Cart([])
+  const [cart, setCart] = useState(initCart);
+  const addToCart = function (product : Product) {
+    setCart(cart.addProduct(product))
+  }
+  const removeFromCart = function (product : Product) {
+    setCart(cart.removeProduct(product))
+  }
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
         <Link to="/customer"> <Button >Customer Page</Button></Link>
         <Link to="/signup"> <Button >Sign Up</Button></Link>
         <Link to="/checkout"> <Button >Checkout</Button></Link>
+        <IconButton onClick={handleOpen}>
+          <ShoppingCartIcon />
+        </IconButton>
+        <CartModal open={open} handleClose={handleClose} cart={cart}/>
         <Container sx={{ py: 8 }} maxWidth="md">
           <Grid container spacing={4}>
-            {/* {nums.map((n) => ( 
-              <Grid item key={n} xs={12} sm={6} md={4}> */}
-                <DonutCard 
-                  height='30%' 
-                  width = '25%' 
-                  padding='0px' 
-                  margin='30px' 
-                  image='/apple_krumb.jpg' 
-                  name='Apple Krumb' 
-                  description='Delicious. Creamy. Irresitable.'
-                />
-                <DonutCard 
-                  height='30%' 
-                  width = '25%' 
-                  padding='0px' 
-                  margin='30px' 
-                  image='/chocolate_glaze.jpg' 
-                  name='Chocolate Glaze' 
-                  description='Chocolate Galore'
-                />
-                <DonutCard 
-                  height='30%' 
-                  width = '25%' 
-                  padding='0px' 
-                  margin='30px' 
-                  image='/bavarian_kreme-1.jpg' 
-                  name='Bavarian Kreme' 
-                  description='Delicious. Kreamy. Irresitable.'
-                />
-                <DonutCard 
-                  height='30%' 
-                  width = '25%' 
-                  padding='0px' 
-                  margin='30px' 
-                  image='/blueberry.jpg' 
-                  name='Blueberry' 
-                  description='Fresh blueberries!'
-                />
-                <DonutCard 
-                  height='30%' 
-                  width = '25%' 
-                  padding='0px' 
-                  margin='30px' 
-                  image='/boston_kreme.jpg' 
-                  name='Boston Kreme' 
-                  description='Donut made in Pittsburgh not Boston.'
-                />
-                <DonutCard 
-                  height='30%' 
-                  width = '25%' 
-                  padding='0px' 
-                  margin='30px' 
-                  image='/chocolate_frosted.jpg' 
-                  name='Chocolate Frosted' 
-                  description='Chocolate AND Frosted'
-                />
+                {DonutsToDisplay.map(function (product) {
+                  return (
+                  <DonutCard 
+                    height='30%' 
+                    width = '25%' 
+                    padding='0px' 
+                    margin='30px' 
+                    product= {product}
+                    addToCart= {addToCart}
+                    removeFromCart= {removeFromCart}
+                    key={product.name}
+                  />)
+                })}
           </Grid> 
         </Container>
     </ThemeProvider>
