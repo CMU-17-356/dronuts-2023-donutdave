@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -39,7 +38,7 @@ function DonutCard (props : DonutCardProps) {
           </Typography>
         </CardContent>
         <CardActions>
-            <Link to="/donut"><Button size="small">Order</Button></Link>
+            <Button sx={{textTransform : 'none'}} size="small">Add to Cart</Button>
         </CardActions>
       </Card>
     )

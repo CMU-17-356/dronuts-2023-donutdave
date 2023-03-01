@@ -15,9 +15,9 @@ function CustomerPage (props : CustomerPageProps) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-        <Link to="/employee"> <Button >Employee Page</Button></Link>
         <Link to="/customer"> <Button >Customer Page</Button></Link>
         <Link to="/signup"> <Button >Sign Up</Button></Link>
+        <Link to="/checkout"> <Button >Checkout</Button></Link>
         <Container sx={{ py: 8 }} maxWidth="md">
           <Grid container spacing={4}>
             {/* {nums.map((n) => ( 
