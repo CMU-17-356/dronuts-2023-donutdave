@@ -35,6 +35,7 @@ function CustomerPage (props : CustomerPageProps) {
         <Link to="/customer"> <Button >Customer Page</Button></Link>
         <Link to="/signup"> <Button >Sign Up</Button></Link>
         <Link to="/checkout"> <Button >Checkout</Button></Link>
+        <Link to="/merchant"> <Button >Merchant</Button></Link>
         <IconButton onClick={handleOpen}>
           <ShoppingCartIcon />
         </IconButton>
