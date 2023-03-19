@@ -4,12 +4,19 @@ import { Product } from '../../src/models/product';
 import { expect } from 'chai';
 import { app, server } from '../../src/index.js';
 import request from 'supertest';
+import mongoose from 'mongoose';
 
 describe('Products', () => {
+  before(function (done) {
+    mongoose.connect('mongodb://localhost:27017/donutdave_testdb', done);
+  });
+
   beforeEach((done) => { // empty the database
-    Order.deleteMany({}, () => { 
-      done() 
-    });        
+    Product.deleteMany({}, () => {
+      Order.deleteMany({}, () => {
+        done()
+      })
+    });             
   });
 
   describe('View order', () => {
