@@ -8,7 +8,8 @@ import request from 'supertest';
 import got from 'got';
 
 describe('Users', () => {
-  beforeEach((done) => { // empty the database
+  beforeEach(function (done) { // empty the database
+    this.timeout(10000);
     User.deleteMany({}, () => { 
       Product.deleteMany({}, () => {
         Order.deleteMany({}, () => {
@@ -308,4 +309,4 @@ describe('Users', () => {
     done();
   })
 
-}).timeout(5000);
+});

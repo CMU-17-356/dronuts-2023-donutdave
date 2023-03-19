@@ -5,7 +5,8 @@ import { app, server } from '../../src/index.js';
 import request from 'supertest';
 
 describe('Products', () => {
-  beforeEach((done) => { // empty the database
+  beforeEach(function (done) { // empty the database
+    this.timeout(10000);
     Product.deleteMany({}, () => { 
       done() 
     });        
@@ -60,4 +61,4 @@ describe('Products', () => {
     done();
   })
 
-}).timeout(5000);
+});

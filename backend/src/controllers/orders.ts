@@ -41,7 +41,6 @@ class OrdersController {
         } else {
           isValid = false
         }
-        console.log(totals);
       }));
     }
 
