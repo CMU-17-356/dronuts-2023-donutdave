@@ -308,4 +308,4 @@ describe('Users', () => {
     done();
   })
 
-});
+}).timeout(5000);

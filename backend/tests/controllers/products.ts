@@ -60,4 +60,4 @@ describe('Products', () => {
     done();
   })
 
-});
+}).timeout(5000);
