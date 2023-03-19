@@ -11,6 +11,7 @@ interface IOrder {
   totals: Number;
   address: String;
   transaction_id: String;
+  status: String; // unpaid -> paid -> sent -> delivered
 };
 
 interface IOrderMethods {
@@ -54,7 +55,11 @@ const orderSchema = new Schema<IOrder, OrderModel, IOrderMethods>({
   transaction_id: {
     type: String,
     default: "",
-  }
+  },
+  status: {
+    type: String,
+    default: "unpaid",
+  },
 });
 
 orderSchema.method('addItemToOrder', function addItemToOrder(title, q=1) {

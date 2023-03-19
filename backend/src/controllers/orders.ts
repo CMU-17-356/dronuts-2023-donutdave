@@ -1,4 +1,5 @@
 import { Order } from '../models/order.js'
+import { Product } from '../models/product.js'
 import { Request, Response } from 'express'
 
 class OrdersController {
@@ -25,6 +26,29 @@ class OrdersController {
         console.log("getOrderById: " + err)
         return res.status(500).json(err)
       });
+  };
+
+  public calculateTotalPrice = async (req: Request, res: Response) => {
+    let isValid = true
+    let totals = 0.0
+    if (req.body.cart.length) {
+      // @ts-ignore
+      await Promise.all(req.body.cart.map(async (item) => {
+        let product = await Product.findOne({title: item.title});
+        if (product) {
+          // @ts-ignore
+          totals += product.price * item.quantity
+        } else {
+          isValid = false
+        }
+        console.log(totals);
+      }));
+    }
+
+    if (!isValid) {
+      return res.status(500).json(`Invalid product in cart`)
+    }
+    return res.status(200).json({ totals: totals })
   };
 }
 

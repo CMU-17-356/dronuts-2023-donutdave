@@ -95,63 +95,83 @@ class UsersController {
       });
   };
 
-  // public checkoutUserCart = async (req: Request, res: Response) => {
-  //   let name = req.params.username
-  //   User.findOne({username: name})
-  //     .then(async (user) => {
-  //       if (user) {
-  //         if (user.cart.length < 1) {
-  //           return res.status(404).json(`Cannot checkout empty cart`)
-  //         }
+  public checkoutUserCart = async (req: Request, res: Response) => {
+    let cart = req.body.cart
+    let address = req.body.address
+    let credit_card = req.body.credit_card
+    if (!cart) {
+      return res.status(404).json("Cannot checkout empty cart")
+    }
+    if (!address) {
+      return res.status(404).json("Cannot checkout without address")
+    }
+    if (!credit_card) {
+      return res.status(404).json("Cannot checkout without credit card")
+    }
 
-  //         // fill in order details
-  //         let order = new Order({ username: name })
-  //         let totals = 0.0
-  //         user.cart.forEach((item) => {
-  //           order.addItemToOrder(item.title, item.quantity)
-  //         });
+    let name = req.params.username
+    User.findOne({username: name})
+      .then(async (user) => {
+        if (user) {
+          // fill in order details
+          let order = new Order({ username: name })
+          let totals = 0.0
+          // @ts-ignore
+          cart.forEach((item) => {
+            order.addItemToOrder(item.title, item.quantity)
+          });
+          order.address = address
 
-  //         // calculate order totals
-  //         let isValid = true
-  //         await Promise.all(order.items.map(async (item) => {
-  //           let product = await Product.findOne({title: item.title});
-  //           if (product) {
-  //             // @ts-ignore
-  //             totals += product.price * item.quantity
-  //           } else {
-  //             isValid = false
-  //           }
-  //         }));
+          // calculate order totals
+          let isValid = true
+          await Promise.all(order.items.map(async (item) => {
+            let product = await Product.findOne({title: item.title});
+            if (product) {
+              // @ts-ignore
+              totals += product.price * item.quantity
+            } else {
+              isValid = false
+            }
+          }));
 
-  //         if (!isValid) {
-  //           return res.status(500).json(`Invalid product in cart`)
-  //         }
-  //         order.totals = totals
+          if (!isValid) {
+            return res.status(500).json(`Invalid product in cart`)
+          }
+          order.totals = totals
 
-  //         // redirect to payment API and save transaction ID
-  //         const response = await got.post(creditAPI, {
-  //           json: {
-  //             companyId: companyID,
-  //             amount: order.totals,
-  //           }
-  //         }).json()
-  //         // @ts-ignore
-  //         order.transaction_id = response.id
+          // redirect to payment API and save transaction ID
+          const response = await got.post(creditAPI, {
+            json: {
+              companyId: companyID,
+              amount: order.totals,
+            }
+          }).json()
+          // @ts-ignore
+          order.transaction_id = response.id
+
+          // process transaction
+          const response2 = await got.post(creditAPI + "/" + order.transaction_id + "/process", {
+            json: {
+              customer_details: address,
+              credit_card: credit_card,
+            }
+          }).json() // TODO: right now it returns status=pending
+          order.status = "paid"
    
-  //         // add to order database and user's order history
-  //         user.history.push(order)
-  //         await order.save()
-  //         await user.save()
+          // add to order database and user's order history
+          user.history.push(order)
+          await order.save()
+          await user.save()
 
-  //         return res.status(200).json(order)
-  //       };
-  //       return res.status(404).json(`User ${name} not found`)
-  //     })
-  //     .catch(err => {
-  //       console.log("checkoutUserCart: " + err)
-  //       return res.status(500).json(err)
-  //     });
-  // };
+          return res.status(200).json(order)
+        };
+        return res.status(404).json(`User ${name} not found`)
+      })
+      .catch(err => {
+        console.log("checkoutUserCart: " + err)
+        return res.status(500).json(err)
+      });
+  };
 
   public getUserOrderHistory = async (req: Request, res: Response) => {
     let name = req.params.username

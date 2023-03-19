@@ -150,68 +150,128 @@ describe('Users', () => {
     });
   });
 
-  // describe('Checkout user cart', () => {
-  //   it('1. Checkout valid cart', (done) => {
-  //     var u = new User({ username: "admin", password: "bruh", full_name: "Thanos", cart: [{title: "plain", quantity: 5}, {title: "chocolate", quantity: 3}]})
-  //     var p1 = new Product({ title: "plain", display_name: "Plain donut", price: "0.99" })
-  //     var p2 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
-  //     u.save().then(() => {
-  //       p1.save().then(() => {
-  //         p2.save().then(() => {
-  //           request(app)
-  //             .post('/api/users/admin/checkout')
-  //             .then((res) => {
-  //               expect(res.statusCode).to.equal(200);
-  //               expect(res.body.username).to.equal("admin");
-  //               expect(res.body.totals).to.equal(10.92);
-  //               expect(res.body.items).to.have.length(2);
-  //               expect(res.body.items[0].title).to.equal("plain");
-  //               expect(res.body.items[0].quantity).to.equal(5);
-  //               expect(res.body.items[1].title).to.equal("chocolate");
-  //               expect(res.body.items[1].quantity).to.equal(3);
+  describe('Checkout user cart', () => {
+    it('1. Checkout valid cart', (done) => {
+      var u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
+      var p1 = new Product({ title: "plain", display_name: "Plain donut", price: "0.99" })
+      var p2 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
+      u.save().then(() => {
+        p1.save().then(() => {
+          p2.save().then(() => {
+            request(app)
+              .post('/api/users/admin/checkout')
+              .send( { cart: [{title: "plain", quantity: 5}, {title: "chocolate", quantity: 3}],
+                       address: "5032 Forbes Ave", credit_card: "1234-4321-5678-8765" } )
+              .then((res) => {
+                expect(res.statusCode).to.equal(200);
+                expect(res.body.username).to.equal("admin");
+                expect(res.body.totals).to.equal(10.92);
+                expect(res.body.items).to.have.length(2);
+                expect(res.body.items[0].title).to.equal("plain");
+                expect(res.body.items[0].quantity).to.equal(5);
+                expect(res.body.items[1].title).to.equal("chocolate");
+                expect(res.body.items[1].quantity).to.equal(3);
+                expect(res.body.address).to.equal("5032 Forbes Ave");
+                expect(res.body.status).to.equal("paid");
 
-  //               // make sure order has a valid transaction ID
-  //               let tid = res.body.transaction_id
-  //               got.get(`${creditAPI}/${tid}`).json().then((response) => {
-  //                 expect(response.amount).to.equal(10.92);
+                // make sure order has a valid transaction ID
+                let tid = res.body.transaction_id
+                got.get(`${creditAPI}/${tid}`).json().then((response) => {
+                  expect(response.amount).to.equal(10.92);
 
-  //                 // make sure order has been saved
-  //                 Order.findById(res.body._id).then((order) => {
-  //                   expect(order.username).to.equal("admin");
-  //                   expect(order._id.toString()).to.equal(res.body._id);
-  //                   expect(order.transaction_id).to.equal(response.id);
+                  // make sure order has been saved
+                  Order.findById(res.body._id).then((order) => {
+                    expect(order.username).to.equal("admin");
+                    expect(order._id.toString()).to.equal(res.body._id);
+                    expect(order.transaction_id).to.equal(response.id);
                     
-  //                   User.findById(u._id).then((user) => {
-  //                     expect(user.history).to.have.length(1);
-  //                     expect(user.history[0]._id.toString()).to.equal(res.body._id);
-  //                     expect(user.history[0].transaction_id).to.equal(response.id);
-  //                     done();
-  //                   }).catch((err) => done(err))
-  //                 }).catch((err) => done(err))
-  //               }).catch((err) => done(err))
-  //             })
-  //             .catch((err) => done(err))
-  //         }).catch((err) => done(err))
-  //       }).catch((err) => done(err))
-  //     }).catch((err) => done(err))
-  //   });
+                    User.findById(u._id).then((user) => {
+                      expect(user.history).to.have.length(1);
+                      expect(user.history[0]._id.toString()).to.equal(res.body._id);
+                      expect(user.history[0].transaction_id).to.equal(response.id);
+                      done();
+                    }).catch((err) => done(err))
+                  }).catch((err) => done(err))
+                }).catch((err) => done(err))
+              })
+              .catch((err) => done(err))
+          }).catch((err) => done(err))
+        }).catch((err) => done(err))
+      }).catch((err) => done(err))
+    });
 
-  //   it('3. Checkout cart with invalid items', (done) => {
-  //     var u = new User({ username: "admin", password: "bruh", full_name: "Thanos", cart: [{title: "plain", quantity: 5}] })
-  //     var p1 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
-  //     u.save().then(() => {
-  //       p1.save().then(() => {
-  //         request(app)
-  //           .post('/api/users/admin/checkout')
-  //           .then((res) => {
-  //             expect(res.statusCode).to.equal(500);
-  //             done()
-  //           })
-  //           .catch((err) => done(err))
-  //       }).catch((err) => done(err))
-  //     }).catch((err) => done(err))
-  //   });
-  // });
+    it('3. Checkout cart with invalid items', (done) => {
+      var u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
+      var p1 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
+      u.save().then(() => {
+        p1.save().then(() => {
+          request(app)
+            .post('/api/users/admin/checkout')
+            .send({ cart: [{title: "plain", quantity: 5}],
+                    address: "5032 Forbes Ave", credit_card: "1234-4321-5678-8765" } )
+            .then((res) => {
+              expect(res.statusCode).to.equal(500);
+              done()
+            })
+            .catch((err) => done(err))
+        }).catch((err) => done(err))
+      }).catch((err) => done(err))
+    });
+
+    it('4. Checkout cart without address', (done) => {
+      var u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
+      var p1 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
+      u.save().then(() => {
+        p1.save().then(() => {
+          request(app)
+            .post('/api/users/admin/checkout')
+            .send({ cart: [{title: "chocolate", quantity: 5}],
+                    credit_card: "1234-4321-5678-8765" } )
+            .then((res) => {
+              expect(res.statusCode).to.equal(404);
+              done()
+            })
+            .catch((err) => done(err))
+        }).catch((err) => done(err))
+      }).catch((err) => done(err))
+    });
+
+    it('4. Checkout cart without credit_card', (done) => {
+      var u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
+      var p1 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
+      u.save().then(() => {
+        p1.save().then(() => {
+          request(app)
+            .post('/api/users/admin/checkout')
+            .send({ cart: [{title: "chocolate", quantity: 5}],
+                    address: "5032 Forbes Ave" } )
+            .then((res) => {
+              expect(res.statusCode).to.equal(404);
+              done()
+            })
+            .catch((err) => done(err))
+        }).catch((err) => done(err))
+      }).catch((err) => done(err))
+    });
+
+    it('4. Checkout cart with empty cart', (done) => {
+      var u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
+      var p1 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
+      u.save().then(() => {
+        p1.save().then(() => {
+          request(app)
+            .post('/api/users/admin/checkout')
+            .send({ credit_card: "1234-4321-5678-8765",
+                    address: "5032 Forbes Ave" } )
+            .then((res) => {
+              expect(res.statusCode).to.equal(404);
+              done()
+            })
+            .catch((err) => done(err))
+        }).catch((err) => done(err))
+      }).catch((err) => done(err))
+    });
+  });
 
   describe('View user order history', () => {
     it('1. View existing user history', (done) => {
