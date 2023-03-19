@@ -6,8 +6,9 @@ import { app, server } from '../../src/index.js';
 import request from 'supertest';
 import mongoose from 'mongoose';
 
-describe('Products', () => {
+describe('Orders', () => {
   before(function (done) {
+    this.timeout(20000);
     mongoose.connect('mongodb://localhost:27017/donutdave_testdb', done);
   });
 

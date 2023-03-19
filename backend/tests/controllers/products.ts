@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 
 describe('Products', () => {
   before(function (done) {
+    this.timeout(20000);
     mongoose.connect('mongodb://localhost:27017/donutdave_testdb', done);
   });
 
