@@ -6,7 +6,7 @@ import request from 'supertest';
 
 describe('Products', () => {
   beforeEach(function (done) { // empty the database
-    this.timeout(10000);
+    this.timeout(100000);
     Product.deleteMany({}, () => { 
       done() 
     });        

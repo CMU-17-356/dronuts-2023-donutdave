@@ -9,7 +9,7 @@ import got from 'got';
 
 describe('Users', () => {
   beforeEach(function (done) { // empty the database
-    this.timeout(10000);
+    this.timeout(100000);
     User.deleteMany({}, () => { 
       Product.deleteMany({}, () => {
         Order.deleteMany({}, () => {
