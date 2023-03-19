@@ -4,19 +4,15 @@ import { Order, IOrder } from './order.js'
 // const sanitizerPlugin = require('mongoose-sanitizer-plugin');
 
 interface IUser {
-  username: String; // allowed characters: letters, numbers, and _
-  password: String;
-  full_name: String;
+  username: string; // allowed characters: letters, numbers, and _
+  password: string;
+  full_name: string;
   history: [IOrder];
-};
-
-// https://mongoosejs.com/docs/typescript/statics-and-methods.html
-interface IUserMethods {
 }
 
-type UserModel = Model<IUser, {}, IUserMethods>
+type UserModel = Model<IUser, {}, {}>
 
-const userSchema: Schema = new Schema<IUser, UserModel, IUserMethods>({
+const userSchema: Schema = new Schema<IUser, UserModel, {}>({
   username: {
     type: String,
     required: true,

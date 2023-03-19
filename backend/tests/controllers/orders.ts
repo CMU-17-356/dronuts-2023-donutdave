@@ -14,7 +14,7 @@ describe('Products', () => {
 
   describe('View order', () => {
     it('1. View existing order', (done) => {
-      var o = new Order({ username: "existing", totals: 10.28 })
+      const o = new Order({ username: "existing", totals: 10.28 })
       o.save().then(() => {
         request(app)
           .get(`/api/orders/${o._id}`)
@@ -28,7 +28,7 @@ describe('Products', () => {
     });
 
     it('2. View non-existing order', (done) => {
-      var o = new Order({ username: "existing", totals: 10.28 }) // not saved
+      const o = new Order({ username: "existing", totals: 10.28 }) // not saved
       request(app)
         .get(`/api/orders/${o._id}`)
         .then((res) => {
@@ -39,8 +39,8 @@ describe('Products', () => {
     });
 
     it('3. View all orders', (done) => {
-      var o1 = new Order({ username: "admin1", totals: 10.28 })
-      var o2 = new Order({ username: "admin2", totals: 12.23 })
+      const o1 = new Order({ username: "admin1", totals: 10.28 })
+      const o2 = new Order({ username: "admin2", totals: 12.23 })
       o1.save().then(() => {
         o2.save().then(() => {
           request(app).get('/api/orders')
@@ -59,8 +59,8 @@ describe('Products', () => {
 
   describe('Calculate total price', () => {
     it('1. Valid items', (done) => {
-      var p1 = new Product({ title: "plain", display_name: "Plain donut", price: "0.99" })
-      var p2 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
+      const p1 = new Product({ title: "plain", display_name: "Plain donut", price: "0.99" })
+      const p2 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
       p1.save().then(() => {
         p2.save().then(() => {
           request(app)
@@ -88,7 +88,7 @@ describe('Products', () => {
   });
 
   it('3. Invalid item', (done) => {
-    var p1 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
+    const p1 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
     p1.save().then(() => {
       request(app)
         .post('/api/orders/totals')

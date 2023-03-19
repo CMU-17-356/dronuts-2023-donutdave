@@ -34,7 +34,7 @@ class OrdersController {
     if (req.body.cart.length) {
       // @ts-ignore
       await Promise.all(req.body.cart.map(async (item) => {
-        let product = await Product.findOne({title: item.title});
+        const product = await Product.findOne({title: item.title});
         if (product) {
           // @ts-ignore
           totals += product.price * item.quantity
