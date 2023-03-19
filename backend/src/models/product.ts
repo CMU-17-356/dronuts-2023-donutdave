@@ -33,7 +33,6 @@ const productSchema = new Schema({
   },
 });
 
-// productSchema.plugin(sanitizerPlugin);
 const Product = model('Product', productSchema)
 
 export { Product }

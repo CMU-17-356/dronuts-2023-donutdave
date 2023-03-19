@@ -66,7 +66,6 @@ orderSchema.method('addItemToOrder', function addItemToOrder(title, q=1) {
   this.items.push({title: title, quantity: q});
 });
 
-// orderSchema.plugin(sanitizerPlugin);
 const Order = model('Order', orderSchema)
 
 export { Order }

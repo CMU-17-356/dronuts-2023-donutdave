@@ -30,7 +30,6 @@ const merchantSchema = new Schema({
   },
 });
 
-// merchantSchema.plugin(sanitizerPlugin);
 const Merchant = model('Merchant', merchantSchema)
 
 export { Merchant, defaultMerchant }

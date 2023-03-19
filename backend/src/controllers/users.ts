@@ -95,107 +95,63 @@ class UsersController {
       });
   };
 
-  public getUserCart = async (req: Request, res: Response) => {
-    let name = req.params.username
-    User.findOne({username: name})
-      .then(user => {
-        if (user) {
-          return res.status(200).json(user.cart)
-        }
-        return res.status(404).json(`User ${name} not found`)
-      })
-      .catch(err => {
-        console.log("viewUserCart: " + err)
-        return res.status(500).json(err)
-      });
-  };
+  // public checkoutUserCart = async (req: Request, res: Response) => {
+  //   let name = req.params.username
+  //   User.findOne({username: name})
+  //     .then(async (user) => {
+  //       if (user) {
+  //         if (user.cart.length < 1) {
+  //           return res.status(404).json(`Cannot checkout empty cart`)
+  //         }
 
-  public modifyUserCart = async (req: Request, res: Response) => {
-    let name = req.params.username
-    User.findOne({username: name})
-      .then(async (user) => {
-        if (user) {
-          let items = req.body.items == null ? [] : req.body.items
-          let isAdd = req.body.isAdd == null ? true : req.body.isAdd
-          // @ts-ignore
-          items.forEach((item) => {
-            let quantity = item.quantity == null ? 1 : item.quantity
-            if (isAdd) {
-              // @ts-ignore
-              user.addItemToCart(item.title, quantity)
-            } else {
-              // @ts-ignore
-              user.removeItemFromCart(item.title)
-            };
-          });
-          await user.save();
-          return res.status(201).json(`User ${name}'s cart updated successfully`);
-        };
-        return res.status(404).json(`User ${name} not found`)
-      })
-      .catch(err => {
-        console.log("modifyUserCart: " + err)
-        return res.status(500).json(err)
-      });
-  }
+  //         // fill in order details
+  //         let order = new Order({ username: name })
+  //         let totals = 0.0
+  //         user.cart.forEach((item) => {
+  //           order.addItemToOrder(item.title, item.quantity)
+  //         });
 
-  public checkoutUserCart = async (req: Request, res: Response) => {
-    let name = req.params.username
-    User.findOne({username: name})
-      .then(async (user) => {
-        if (user) {
-          if (user.cart.length < 1) {
-            return res.status(404).json(`Cannot checkout empty cart`)
-          }
+  //         // calculate order totals
+  //         let isValid = true
+  //         await Promise.all(order.items.map(async (item) => {
+  //           let product = await Product.findOne({title: item.title});
+  //           if (product) {
+  //             // @ts-ignore
+  //             totals += product.price * item.quantity
+  //           } else {
+  //             isValid = false
+  //           }
+  //         }));
 
-          // fill in order details
-          let order = new Order({ username: name })
-          let totals = 0.0
-          user.cart.forEach((item) => {
-            order.addItemToOrder(item.title, item.quantity)
-          });
+  //         if (!isValid) {
+  //           return res.status(500).json(`Invalid product in cart`)
+  //         }
+  //         order.totals = totals
 
-          // calculate order totals
-          let isValid = true
-          await Promise.all(order.items.map(async (item) => {
-            let product = await Product.findOne({title: item.title});
-            if (product) {
-              // @ts-ignore
-              totals += product.price * item.quantity
-            } else {
-              isValid = false
-            }
-          }));
-
-          if (!isValid) {
-            return res.status(500).json(`Invalid product in cart`)
-          }
-          order.totals = totals
-
-          // redirect to payment API and save transaction ID
-          const response = await got.post(creditAPI, {
-            json: {
-              companyId: companyID,
-              amount: order.totals,
-            }
-          }).json()
-          // @ts-ignore
-          order.transaction_id = response.id
+  //         // redirect to payment API and save transaction ID
+  //         const response = await got.post(creditAPI, {
+  //           json: {
+  //             companyId: companyID,
+  //             amount: order.totals,
+  //           }
+  //         }).json()
+  //         // @ts-ignore
+  //         order.transaction_id = response.id
    
-          // add to order database and user's order history
-          user.history.push(order)
-          await order.save()
-          await user.save()
+  //         // add to order database and user's order history
+  //         user.history.push(order)
+  //         await order.save()
+  //         await user.save()
 
-          return res.status(200).json(order)
-        };
-        return res.status(404).json(`User ${name} not found`)
-      })
-      .catch(err => {
-        console.log("checkoutUserCart: " + err)
-        return res.status(500).json(err)
-      });
-  };
+  //         return res.status(200).json(order)
+  //       };
+  //       return res.status(404).json(`User ${name} not found`)
+  //     })
+  //     .catch(err => {
+  //       console.log("checkoutUserCart: " + err)
+  //       return res.status(500).json(err)
+  //     });
+  // };
 
   public getUserOrderHistory = async (req: Request, res: Response) => {
     let name = req.params.username
