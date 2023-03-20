@@ -2,12 +2,14 @@ import { Router } from 'express';
 import { UsersController } from '../controllers/users.js'
 import { ProductsController } from '../controllers/products.js'
 import { OrdersController } from '../controllers/orders.js'
+import { MerchantsController } from '../controllers/merchants.js';
 
 const router = Router()
 
 const Users = new UsersController()
 const Products = new ProductsController()
 const Orders = new OrdersController()
+const Merchants = new MerchantsController()
 
 router.get('/users', Users.getUsers)
 router.post('/users', Users.createUser)
@@ -23,5 +25,7 @@ router.post('/orders/totals', Orders.calculateTotalPrice)
 
 router.get('/products', Products.getProducts)
 router.get('/products/:title', Products.getProductByTitle)
+
+router.get('/merchants/drones', Merchants.getDrones)
 
 export { router }

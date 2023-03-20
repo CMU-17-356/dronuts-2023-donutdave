@@ -41,8 +41,8 @@ describe('Orders', () => {
     });
 
     it('3. View all orders', (done) => {
-      const o1 = new Order({ username: "admin1", totals: 10.28 })
-      const o2 = new Order({ username: "admin2", totals: 12.23 })
+      const o1 = new Order({ username: "admin1", totals: 10.28, status: "paid" })
+      const o2 = new Order({ username: "admin2", totals: 12.23, status: "delivered" })
       o1.save().then(() => {
         o2.save().then(() => {
           request(app).get('/api/orders')
@@ -51,6 +51,38 @@ describe('Orders', () => {
               expect(res.body).to.have.length(2);
               expect(res.body[0]._id.toString()).to.equal(o1._id.toString());
               expect(res.body[1]._id.toString()).to.equal(o2._id.toString());
+              done();
+            })
+            .catch((err) => done(err))
+        }).catch((err) => done(err))
+      }).catch((err) => done(err))
+    });
+
+    it('4. View orders by status', (done) => {
+      const o1 = new Order({ username: "admin1", totals: 10.28, status: "paid" })
+      const o2 = new Order({ username: "admin2", totals: 12.23, status: "delivered" })
+      o1.save().then(() => {
+        o2.save().then(() => {
+          request(app).get('/api/orders?status=paid')
+            .then((res)=>{
+              expect(res.statusCode).to.equal(200);
+              expect(res.body).to.have.length(1);
+              expect(res.body[0]._id.toString()).to.equal(o1._id.toString());
+              done();
+            })
+            .catch((err) => done(err))
+        }).catch((err) => done(err))
+      }).catch((err) => done(err))
+    });
+
+    it('5. Invalid status', (done) => {
+      const o1 = new Order({ username: "admin1", totals: 10.28, status: "paid" })
+      const o2 = new Order({ username: "admin2", totals: 12.23, status: "delivered" })
+      o1.save().then(() => {
+        o2.save().then(() => {
+          request(app).get('/api/orders?status=unpaid')
+            .then((res)=>{
+              expect(res.statusCode).to.equal(404);
               done();
             })
             .catch((err) => done(err))

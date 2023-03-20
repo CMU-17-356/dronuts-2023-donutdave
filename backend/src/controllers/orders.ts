@@ -4,7 +4,7 @@ import { Request, Response } from 'express'
 
 class OrdersController {
   public getOrders = async (req: Request, res: Response) => {
-    if (req.body.status == null) {
+    if (req.query.status == null) {
       await Order.find({})
         .then(orders => {
           return res.status(200).json(orders)
@@ -14,7 +14,7 @@ class OrdersController {
           return res.status(500).json(err)
         });
     } else {
-      const status = req.body.status
+      const status = req.query.status
       if (status !== "paid" && status !== "sent" && status !== "delivered") {
         return res.status(404).json("Invalid order status")
       }
