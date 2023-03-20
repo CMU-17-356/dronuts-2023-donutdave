@@ -6,6 +6,7 @@ interface ProductResponse {
     title: string;
     display_name: string;
     price: number;
+    _id: string;
   }
 
 
@@ -14,6 +15,7 @@ function convertToProduct(json: ProductResponse): Product {
       name: json.display_name,
       image: json.image,
       price: json.price,
+      id: json._id
     };
   }
 
