@@ -52,7 +52,14 @@ function SimpleDialog(props: SimpleDialogProps) {
   );
 }
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#EF72AC',
+      contrastText: '#FBF5F3',
+    },
+  },
+});
 
 function SignUpPage() {
   const [open, setOpen] = React.useState(false);
@@ -79,7 +86,7 @@ function SignUpPage() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up

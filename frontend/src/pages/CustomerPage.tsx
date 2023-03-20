@@ -15,7 +15,14 @@ import CartModal from '../components/CartModal';
 
 type CustomerPageProps = {}
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#EF72AC',
+      contrastText: '#FBF5F3',
+    },
+  },
+});
 
 function CustomerPage (props : CustomerPageProps) {
   const [open, setOpen] = useState(false);
@@ -33,6 +40,7 @@ function CustomerPage (props : CustomerPageProps) {
     <ThemeProvider theme={theme}>
       <CssBaseline />
         <Link to="/customer"> <Button >Customer Page</Button></Link>
+        <Link to="/employee"> <Button >Employee Page</Button></Link>
         <Link to="/signup"> <Button >Sign Up</Button></Link>
         <Link to="/checkout"> <Button >Checkout</Button></Link>
         <IconButton onClick={handleOpen}>
