@@ -76,31 +76,31 @@ describe('Orders', () => {
         }).catch((err) => done(err));
       }).catch((err) => done(err));
     });
-  });
 
-  it('2. Empty list', (done) => {
-    request(app)
-      .post('/api/orders/totals')
-      .send({ cart: [] })
-      .then((res) => {
-        expect(res.statusCode).to.equal(200);
-        expect(res.body.totals).to.equal(0);
-        done();
-        }).catch((err) => done(err))
-  });
-
-  it('3. Invalid item', (done) => {
-    const p1 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
-    p1.save().then(() => {
+    it('2. Empty list', (done) => {
       request(app)
         .post('/api/orders/totals')
-        .send({ cart: [{title: "plain", quantity: 5}] })
+        .send({ cart: [] })
         .then((res) => {
-          expect(res.statusCode).to.equal(500);
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.totals).to.equal(0);
           done();
-        })
-        .catch((err) => done(err))
-    }).catch((err) => done(err));
+          }).catch((err) => done(err))
+    });
+  
+    it('3. Invalid item', (done) => {
+      const p1 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
+      p1.save().then(() => {
+        request(app)
+          .post('/api/orders/totals')
+          .send({ cart: [{title: "plain", quantity: 5}] })
+          .then((res) => {
+            expect(res.statusCode).to.equal(500);
+            done();
+          })
+          .catch((err) => done(err))
+      }).catch((err) => done(err));
+    });
   });
 
   after((done) => {
