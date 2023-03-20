@@ -1,5 +1,4 @@
 // @ts-nocheck
-import { Merchant } from '../models/merchant.js'
 import { companyID, droneAPI, airbaseAPI } from '../index.js'
 import { Request, Response } from 'express'
 import got from 'got'
@@ -34,6 +33,26 @@ class MerchantsController {
       }
       return res.status(200).json(drones.filter((drone) => drone.status === status))
     }
+  }
+
+  static getFirstAvailableDrone = async () => {
+    const response = await got.get(airbaseAPI + "/" + companyID).json()
+    for (const id of response.drones) {
+      const d = await got.get(droneAPI + "/" + id).json();
+      if (!(d.current_delivery && d.current_delivery.status === "in_route")) {
+        const res = await got.put(droneAPI + "/" + id + "/send", {
+          json: {
+            id: id,
+            lat: 40, // TODO
+            lon: -80,
+          }
+        })
+        if (res.statusCode == 204) {
+          return id
+        }
+      }
+    }
+    return null
   }
 }
 

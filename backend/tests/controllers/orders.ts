@@ -136,6 +136,22 @@ describe('Orders', () => {
     });
   });
 
+  describe('Assign drone to order', () => {
+    it('1. Existing order', (done) => {
+      const o = new Order({ username: "existing", totals: 10.28 })
+      o.save().then(() => {
+        request(app)
+          .post(`/api/orders/${o._id}/drone`)
+          .then((res) => {
+            expect(res.statusCode).to.equal(200);
+            expect(res.body.id).to.be.oneOf([217, 218, 219, 220]);
+            done();
+          })
+          .catch((err) => done(err))
+      })
+    });
+  });
+
   after((done) => {
     server.close();
     done();

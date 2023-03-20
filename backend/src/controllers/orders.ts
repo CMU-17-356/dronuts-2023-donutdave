@@ -1,4 +1,5 @@
 import { Order } from '../models/order.js'
+import { MerchantsController } from './merchants.js'
 import { Product } from '../models/product.js'
 import { Request, Response } from 'express'
 
@@ -63,6 +64,24 @@ class OrdersController {
       return res.status(500).json(`Invalid product in cart`)
     }
     return res.status(200).json({ totals: totals })
+  };
+
+  public assignDroneToOrder = async (req: Request, res: Response) => {
+    await Order.findById(req.params.id)
+      .then(async (order) => {
+        if (order) {
+          const drone_id = await MerchantsController.getFirstAvailableDrone()
+          if (drone_id) {
+            return res.status(200).json({ id: drone_id })
+          }
+          return res.status(403).json("No available drone")
+        }
+        return res.status(404).json(`Order ${req.params.id} not found`)
+      })
+      .catch(err => {
+        console.log("assignDroneToOrder: " + err)
+        return res.status(500).json(err)
+      });
   };
 }
 

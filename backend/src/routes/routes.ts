@@ -21,6 +21,7 @@ router.post('/users/:username/checkout', Users.checkoutUserCart)
 router.get('/users/:username/history', Users.getUserOrderHistory)
 router.get('/orders', Orders.getOrders)
 router.get('/orders/:id', Orders.getOrderById)
+router.post('/orders/:id/drone', Orders.assignDroneToOrder)
 router.post('/orders/totals', Orders.calculateTotalPrice)
 
 router.get('/products', Products.getProducts)
