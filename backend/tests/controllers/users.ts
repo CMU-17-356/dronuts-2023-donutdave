@@ -6,14 +6,8 @@ import { expect } from 'chai';
 import { app, creditAPI, server } from '../../src/index.js';
 import request from 'supertest';
 import got from 'got';
-import mongoose from 'mongoose';
 
 describe('Users', () => {
-  before(function (done) {
-    this.timeout(20000);
-    mongoose.connect('mongodb://localhost:27017/donutdave_testdb', done);
-  });
-
   beforeEach(function (done) { // empty the database
     User.deleteMany({}, () => { 
       Product.deleteMany({}, () => {

@@ -34,7 +34,7 @@ jobs:
     - name: Run tests
       run: | 
         cd backend
-        npm run test
+        npm run deploy_test
 
     - name: Build app
       timeout-minutes: 1

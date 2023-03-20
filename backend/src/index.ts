@@ -15,9 +15,11 @@ if (app.get('env') === 'development') {
   console.log(`⚡️connecting to development db`)
   db_url = 'mongodb+srv://xinyao:20001028@cluster0.kwf9tsb.mongodb.net/devdb?retryWrites=true&w=majority'
 } else if (app.get('env') === 'test') {
-  console.log(`⚡️connecting to test db`)
+  console.log(`⚡️connecting to test db (local)`)
   db_url = 'mongodb://localhost:27017/donutdave_testdb'
-  // db_url = 'mongodb+srv://xinyao:20001028@cluster0.kwf9tsb.mongodb.net/testdb?retryWrites=true&w=majority'
+} else if (app.get('env') === 'deploy_test') {
+  console.log(`⚡️connecting to test db (deploy)`)
+  db_url = 'mongodb+srv://xinyao:20001028@cluster0.kwf9tsb.mongodb.net/testdb?retryWrites=true&w=majority'
 }
 mongoose
   .connect(db_url)
