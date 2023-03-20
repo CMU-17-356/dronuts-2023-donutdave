@@ -59,15 +59,13 @@ function DonutCard (props : DonutCardProps) {
             // 16:9
             pt: '0.25%',
           }} 
-          image={require('../images' + props.product.image)}
+          image={props.product.image === "" ? 'https://www.firstbenefits.org/wp-content/uploads/2017/10/placeholder.png' 
+                                            : props.product.image}
           alt="random"
         />
         <CardContent sx={{ flexGrow: 1 }}>
           <Typography gutterBottom variant="h5" component="h2">
           {`${props.product.name}`}
-          </Typography>
-          <Typography>
-          {`${props.product.description}`}
           </Typography>
           <Typography>
           {`${USDollar.format(props.product.price)}`}

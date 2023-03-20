@@ -5,13 +5,13 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DonutCard from '../components/DonutCard';
-import DonutsToDisplay from '../components/DonutsToDisplay';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import IconButton from '@mui/material/IconButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Cart from '../components/Cart';
 import Product from '../components/Product';
 import CartModal from '../components/CartModal';
+import getProducts from '../api/getProducts';
 
 type CustomerPageProps = {}
 
@@ -36,6 +36,15 @@ function CustomerPage (props : CustomerPageProps) {
   const removeFromCart = function (product : Product) {
     setCart(cart.removeProduct(product))
   }
+  const [products, setProducts] = useState([] as Product[])
+  useEffect(() => {
+      const fetchData = async function () {
+          const fetchedProducts = await getProducts()
+          setProducts(fetchedProducts)
+          console.log(JSON.stringify(fetchedProducts))
+      }
+      fetchData()
+  }, [])
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -49,7 +58,7 @@ function CustomerPage (props : CustomerPageProps) {
         <CartModal open={open} handleClose={handleClose} cart={cart}/>
         <Container sx={{ py: 8 }} maxWidth="md">
           <Grid container spacing={4}>
-                {DonutsToDisplay.map(function (product) {
+                {products.map(function (product) {
                   return (
                   <DonutCard 
                     height='30%' 
