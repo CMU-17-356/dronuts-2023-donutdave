@@ -8,7 +8,7 @@ import request from 'supertest';
 import got from 'got';
 
 describe('Users', () => {
-  beforeEach((done) => { // empty the database
+  beforeEach(function (done) { // empty the database
     User.deleteMany({}, () => { 
       Product.deleteMany({}, () => {
         Order.deleteMany({}, () => {
@@ -42,7 +42,7 @@ describe('Users', () => {
     });
 
     it('3. Invalid for duplicated username', (done) => {
-      var u1 = new User({ username: "dupname", password: "bruh", full_name: "Thanos" })
+      const u1 = new User({ username: "dupname", password: "bruh", full_name: "Thanos" })
       u1.save().then(() => {
         request(app)
           .post('/api/users')
@@ -58,7 +58,7 @@ describe('Users', () => {
 
   describe('View user', () => {
     it('1. View existing user', (done) => {
-      var u1 = new User({ username: "existing", password: "bruh", full_name: "Thanos" })
+      const u1 = new User({ username: "existing", password: "bruh", full_name: "Thanos" })
       u1.save().then(() => {
         request(app)
           .get('/api/users/existing')
@@ -82,8 +82,8 @@ describe('Users', () => {
     });
 
     it('3. View all users', (done) => {
-      var u1 = new User({ username: "new1", password: "bruh", full_name: "Thanos" })
-      var u2 = new User({ username: "new2", password: "okay", full_name: "Ironman" })
+      const u1 = new User({ username: "new1", password: "bruh", full_name: "Thanos" })
+      const u2 = new User({ username: "new2", password: "okay", full_name: "Ironman" })
       u1.save().then(() => {
         u2.save().then(() => {
           request(app).get('/api/users')
@@ -102,7 +102,7 @@ describe('Users', () => {
 
   describe('Update user', () => {
     it('1. Update existing user', (done) => {
-      var u1 = new User({ username: "updating", password: "bruh", full_name: "Thanos" })
+      const u1 = new User({ username: "updating", password: "bruh", full_name: "Thanos" })
       u1.save().then(() => {
         request(app)
           .patch('/api/users/updating')
@@ -133,8 +133,8 @@ describe('Users', () => {
     });
 
     it('3. Cannot update username to an existing username', (done) => {
-      var u1 = new User({ username: "new1", password: "bruh", full_name: "Thanos" })
-      var u2 = new User({ username: "new2", password: "okay", full_name: "Ironman" })
+      const u1 = new User({ username: "new1", password: "bruh", full_name: "Thanos" })
+      const u2 = new User({ username: "new2", password: "okay", full_name: "Ironman" })
       u1.save().then(() => {
         u2.save().then(() => {
           request(app)
@@ -150,103 +150,18 @@ describe('Users', () => {
     });
   });
 
-  describe('View user cart', () => {
-    it('1. View existing user cart', (done) => {
-      var u1 = new User({ username: "existing", password: "bruh", full_name: "Thanos", cart: [{title: "plain", quantity: 5}]})
-      u1.save().then(() => {
-        request(app)
-          .get('/api/users/existing/cart')
-          .then((res) => {
-            expect(res.statusCode).to.equal(200);
-            expect(res.body[0].title).to.equal("plain");
-            expect(res.body[0].quantity).to.equal(5);
-            done();
-          })
-          .catch((err) => done(err))
-      }).catch((err) => done(err))
-    });
-
-    it('2. View non-existing user cart', (done) => {
-      request(app)
-        .get('/api/users/nonexisting/cart')
-        .then((res) => {
-          expect(res.statusCode).to.equal(404);
-          done();
-        })
-        .catch((err) => done(err))
-    });
-  });
-
-  describe('Modify user cart', () => {
-    it('1. Add new items', (done) => {
-      var u1 = new User({ username: "existing", password: "bruh", full_name: "Thanos", cart: [{title: "plain", quantity: 5}]})
-      u1.save().then(() => {
-        request(app)
-          .patch('/api/users/existing/cart')
-          .send( {items: [{ title: "chocolate" }, { title: "strawberry", quantity: 3}]} )
-          .then((res) => {
-            expect(res.statusCode).to.equal(201);
-            User.findById(u1._id)
-              .then(user => {
-                expect(user.cart).to.have.length(3)
-                expect(user.cart[1].title).to.equal("chocolate");
-                expect(user.cart[1].quantity).to.equal(1);
-                expect(user.cart[2].title).to.equal("strawberry");
-                expect(user.cart[2].quantity).to.equal(3);
-                done();
-              })
-              .catch((err) => done(err))
-          })
-          .catch((err) => done(err))
-      }).catch((err) => done(err))
-    });
-
-    it('2. Remove existing items', (done) => {
-      var u1 = new User({ username: "existing", password: "bruh", full_name: "Thanos", cart: [{title: "plain", quantity: 5}, {title: "chocolate", quantity: 10}, {title: "strawberry", quantity: 1}]})
-      u1.save().then(() => {
-        request(app)
-          .patch('/api/users/existing/cart')
-          .send( {items: [{ title: "plain" }, { title: "strawberry"}], isAdd: false} )
-          .then((res) => {
-            expect(res.statusCode).to.equal(201);
-            User.findById(u1._id)
-              .then(user => {
-                expect(user.cart).to.have.length(1)
-                expect(user.cart[0].title).to.equal("chocolate");
-                expect(user.cart[0].quantity).to.equal(10);
-                done();
-              })
-              .catch((err) => done(err))
-          })
-          .catch((err) => done(err))
-      }).catch((err) => done(err))
-    });
-
-    it('3. Remove non-existing item', (done) => {
-      var u1 = new User({ username: "existing", password: "bruh", full_name: "Thanos", cart: [{title: "plain", quantity: 5}, {title: "chocolate", quantity: 10}]})
-      u1.save().then(() => {
-        request(app)
-          .patch('/api/users/existing/cart')
-          .send( {items: [{ title: "plain" }, { title: "strawberry"}], isAdd: false} )
-          .then((res) => {
-            expect(res.statusCode).to.equal(500);
-            done();
-          })
-          .catch((err) => done(err))
-      }).catch((err) => done(err))
-    });
-  });
-
   describe('Checkout user cart', () => {
     it('1. Checkout valid cart', (done) => {
-      var u = new User({ username: "admin", password: "bruh", full_name: "Thanos", cart: [{title: "plain", quantity: 5}, {title: "chocolate", quantity: 3}]})
-      var p1 = new Product({ title: "plain", display_name: "Plain donut", price: "0.99" })
-      var p2 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
+      const u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
+      const p1 = new Product({ title: "plain", display_name: "Plain donut", price: "0.99" })
+      const p2 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
       u.save().then(() => {
         p1.save().then(() => {
           p2.save().then(() => {
             request(app)
               .post('/api/users/admin/checkout')
+              .send( { cart: [{title: "plain", quantity: 5}, {title: "chocolate", quantity: 3}],
+                       address: "5032 Forbes Ave", credit_card: "1234-4321-5678-8765" } )
               .then((res) => {
                 expect(res.statusCode).to.equal(200);
                 expect(res.body.username).to.equal("admin");
@@ -256,9 +171,11 @@ describe('Users', () => {
                 expect(res.body.items[0].quantity).to.equal(5);
                 expect(res.body.items[1].title).to.equal("chocolate");
                 expect(res.body.items[1].quantity).to.equal(3);
+                expect(res.body.address).to.equal("5032 Forbes Ave");
+                expect(res.body.status).to.equal("paid");
 
                 // make sure order has a valid transaction ID
-                let tid = res.body.transaction_id
+                const tid = res.body.transaction_id
                 got.get(`${creditAPI}/${tid}`).json().then((response) => {
                   expect(response.amount).to.equal(10.92);
 
@@ -284,14 +201,70 @@ describe('Users', () => {
     });
 
     it('3. Checkout cart with invalid items', (done) => {
-      var u = new User({ username: "admin", password: "bruh", full_name: "Thanos", cart: [{title: "plain", quantity: 5}] })
-      var p1 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
+      const u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
+      const p1 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
       u.save().then(() => {
         p1.save().then(() => {
           request(app)
             .post('/api/users/admin/checkout')
+            .send({ cart: [{title: "plain", quantity: 5}],
+                    address: "5032 Forbes Ave", credit_card: "1234-4321-5678-8765" } )
             .then((res) => {
               expect(res.statusCode).to.equal(500);
+              done()
+            })
+            .catch((err) => done(err))
+        }).catch((err) => done(err))
+      }).catch((err) => done(err))
+    });
+
+    it('4. Checkout cart without address', (done) => {
+      const u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
+      const p1 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
+      u.save().then(() => {
+        p1.save().then(() => {
+          request(app)
+            .post('/api/users/admin/checkout')
+            .send({ cart: [{title: "chocolate", quantity: 5}],
+                    credit_card: "1234-4321-5678-8765" } )
+            .then((res) => {
+              expect(res.statusCode).to.equal(404);
+              done()
+            })
+            .catch((err) => done(err))
+        }).catch((err) => done(err))
+      }).catch((err) => done(err))
+    });
+
+    it('4. Checkout cart without credit_card', (done) => {
+      const u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
+      const p1 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
+      u.save().then(() => {
+        p1.save().then(() => {
+          request(app)
+            .post('/api/users/admin/checkout')
+            .send({ cart: [{title: "chocolate", quantity: 5}],
+                    address: "5032 Forbes Ave" } )
+            .then((res) => {
+              expect(res.statusCode).to.equal(404);
+              done()
+            })
+            .catch((err) => done(err))
+        }).catch((err) => done(err))
+      }).catch((err) => done(err))
+    });
+
+    it('4. Checkout cart with empty cart', (done) => {
+      const u = new User({ username: "admin", password: "bruh", full_name: "Thanos" })
+      const p1 = new Product({ title: "chocolate", display_name: "Chocolate donut", price: "1.99" })
+      u.save().then(() => {
+        p1.save().then(() => {
+          request(app)
+            .post('/api/users/admin/checkout')
+            .send({ credit_card: "1234-4321-5678-8765",
+                    address: "5032 Forbes Ave" } )
+            .then((res) => {
+              expect(res.statusCode).to.equal(404);
               done()
             })
             .catch((err) => done(err))
@@ -302,9 +275,9 @@ describe('Users', () => {
 
   describe('View user order history', () => {
     it('1. View existing user history', (done) => {
-      var o1 = new Order({ username: "existing", totals: 10.28 })
-      var o2 = new Order({ username: "existing", totals: 12.23 })
-      var u = new User({ username: "existing", password: "bruh", full_name: "Thanos", history: [o1, o2]})
+      const o1 = new Order({ username: "existing", totals: 10.28 })
+      const o2 = new Order({ username: "existing", totals: 12.23 })
+      const u = new User({ username: "existing", password: "bruh", full_name: "Thanos", history: [o1, o2]})
       u.save().then(() => {
         request(app)
           .get('/api/users/existing/history')
