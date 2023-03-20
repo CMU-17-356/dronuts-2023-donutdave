@@ -1,8 +1,6 @@
 import { Schema, model } from 'mongoose'
 import { Product, IProduct } from './product.js'
 
-// const sanitizerPlugin = require('mongoose-sanitizer-plugin');
-
 const defaultMerchant = "Lawrenceville Donut Store"
 
 interface IMerchant {
