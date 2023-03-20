@@ -4,7 +4,7 @@ import { expect } from 'chai';
 
 describe('Testing making new order', function () {
   it('1. Invalid if no username', function (done) {
-    var o = new Order({})
+    const o = new Order({})
     o.validate(function(err) {
       if (err) {
         expect(err.errors.username).to.exist; 
@@ -14,7 +14,7 @@ describe('Testing making new order', function () {
   })
 
   it('2. Invalid if non-integer quantity in any item', function (done) {
-    var o = new Order({ username: "admin", items: [{title: "Plain donut", quantity: 0.5}] })
+    const o = new Order({ username: "admin", items: [{title: "Plain donut", quantity: 0.5}] })
     o.validate(function(err) {
       if (err) {
         // @ts-ignore 
@@ -25,7 +25,7 @@ describe('Testing making new order', function () {
   })
 
   it('3. Creating new order', function (done) {
-    var o = new Order({ username: "admin" })
+    const o = new Order({ username: "admin" })
     o.validate(function () {
       expect(o.username).to.exist;
       expect(o.items).to.have.length(0);
@@ -36,7 +36,7 @@ describe('Testing making new order', function () {
   })
 
   it('4. Add item to order', function (done) {
-    var o = new Order({ username: "admin" })
+    const o = new Order({ username: "admin" })
     o.validate(function () {
       expect(o.items).to.have.length(0);
       
