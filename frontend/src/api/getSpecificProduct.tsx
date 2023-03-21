@@ -10,7 +10,7 @@ interface ProductResponse {
   }
 
 
-  function convertToProduct(json: ProductResponse): Product {
+  function convertToProduct(json: any): Product {
     return {
       name: json.display_name,
       description : json.title,
@@ -21,9 +21,10 @@ interface ProductResponse {
   }
 
 async function getSpecificProducts(name:string) {
-    const products = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/products` +name)
-    const data_array = products.data.map(convertToProduct);
-    return data_array
+    const products = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/products/`+name)
+    console.log(products.data)
+    return products.data
+    // returns {image: '', _id: '63fe706e9886852807f775c9', title: 'plain', display_name: 'Plain donut', price: 0.99}
 }
 
 

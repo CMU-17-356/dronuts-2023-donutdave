@@ -10,6 +10,7 @@ import getSpecificProduct from '../api/getSpecificProduct';
 import { useEffect } from "react";
 import axios from "axios";
 import Product from '../components/Product';
+import { isTemplateSpan } from 'typescript';
 
 
 type OrderPageProps = {}
@@ -38,38 +39,39 @@ function MerchantOrderPage (props : OrderPageProps) {
     
     
 const {orders, setOrders} = useOrderArray('orders', []);
-const products = new Array<Product>();
+
+const [products, setProducts] = useState([['x',1.99]]);
+
 
     useEffect(() => {
         const fetchData = async function () {
             const fetchedOrders = await getOrders()
             setOrders(fetchedOrders)
-      
         }
-
         fetchData()
-
-    }, [setOrders])
-
-
-  function fetchProductData (item: Product) {
-      return  getSpecificProduct(item.name)
-  }
-
-
-
-    const p = JSON.stringify(orders)
+        const p = JSON.stringify(orders)
     console.log(JSON.stringify(orders))
     let empObj =  JSON.parse(p);
     const cartItems = (empObj[0].items)
 
 
     for (let i = 0; i < cartItems.length; i++) {
-      let l = fetchProductData(cartItems[i])
+      let item = cartItems[i]
+      let l = getSpecificProduct(item.title)
       console.log(l)
-      products.push(l)
+      l.then((value) => {  
+        setProducts([...products, [value.title, value.price]])
+         })     
   }
 
+    }, [setOrders])
+    const p = JSON.stringify(orders)
+    console.log(JSON.stringify(orders))
+    let empObj =  JSON.parse(p);
+    const cartItems = (empObj[0].items)
+
+
+  console.log(cartItems);
 
     return (
         <ThemeProvider theme={theme}>
@@ -80,7 +82,7 @@ const products = new Array<Product>();
                         <Box display="flex" mb={1}>
                             <Box ml={2} flex="1">
                               
-                                <Typography variant="h5">
+                                <Typography variant="h5" component={'span'}>
                                     Order Status: {empObj[0].status}
 
                                 </Typography>
@@ -91,7 +93,7 @@ const products = new Array<Product>();
                             </ListItemAvatar>
                             <ListItemText
                                 primary={`Username: ` +  empObj[0].username}
-                                secondary={empObj[0].address}
+                                secondary={empObj[1].address}
                             />
                             
                         </ListItem> 
@@ -99,10 +101,11 @@ const products = new Array<Product>();
       <h2 style={{ textAlign: "center" }}>Invoice</h2>
       
       {cartItems.map((item:any) => (
-          <ListItem key={item.title} >
-             <ListItemText primary={item.title} />
+          <ListItem key={item.id} >
+             <ListItemText id= "itemName" primary={item.title} />
           <ListItemText primary={item.quantity} />
-          {/* <ListItemText primary={fetchProductData(item).} /> <- THIS IS WHERE THE PRICE OF EACH OBJECT SHOULD GO*/}
+          {/* <p>{(products[0])}</p> */}
+          {/* <ListItemText id= "price" primary={"1.99"} />  */}
           
 
             {/* <Typography variant="body2">{product.price}</Typography> */}
@@ -141,25 +144,26 @@ const products = new Array<Product>();
                         {(item.price * 0.84).toFixed(2)}{" "}
                       </TableCell>
                       <TableCell align="right">
-                        {(item.totals * 0.84).toFixed(2)}
+                        {( cartItems.length * 0.84).toFixed(2)}
                       </TableCell>
                     </TableRow>
                   );
                 })}
-              <TableRow>
+              {/* <TableRow>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell align="right">
                   <strong>Total Amount in USD</strong>
                 </TableCell>
                 <TableCell align="right">
-                  {cartItems
-                    .map((item:any) => item.totals * 0.84)
-                    .reduce((acc:any, value:any) => acc + value)
+                  {
+                  cartItems[0].totals
+                    // .map((item:any) => cartItems.length * 1.99)
+                    // .reduce((acc:any, value:any) => acc + value)
                     // .toFixed(2)}
                   }
                 </TableCell>
-              </TableRow>
+              </TableRow> */}
             </TableBody>
           </Table>
         </TableContainer>
