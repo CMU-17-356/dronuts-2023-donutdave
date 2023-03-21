@@ -1,5 +1,4 @@
 // @ts-nocheck
-import { MerchantsController } from '../../src/controllers/merchants';
 import { Product } from '../../src/models/product';
 import { Order } from '../../src/models/order';
 import { expect } from 'chai';
