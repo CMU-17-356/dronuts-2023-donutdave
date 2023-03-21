@@ -635,7 +635,7 @@ exports[`signup page rendering/navigating 1`] = `
     <h1
       className="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
     >
-      Sign up
+      Sign Up
     </h1>
     <form
       className="MuiBox-root css-178yklu"
