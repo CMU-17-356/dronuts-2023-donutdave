@@ -1,7 +1,5 @@
 import { Schema, model } from 'mongoose'
 
-// const sanitizerPlugin = require('mongoose-sanitizer-plugin');
-
 interface IProduct {
   title: string;
   display_name: string;
@@ -29,8 +27,8 @@ const productSchema = new Schema({
   },
   image: {
     type: String,
-    default: "" // TODO: or some other default image path
-  },
+    default: ""
+  }
 });
 
 const Product = model('Product', productSchema)

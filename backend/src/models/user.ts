@@ -1,8 +1,6 @@
 import { Model, Schema, model } from 'mongoose'
 import { Order, IOrder } from './order.js'
 
-// const sanitizerPlugin = require('mongoose-sanitizer-plugin');
-
 interface IUser {
   username: string; // allowed characters: letters, numbers, and _
   password: string;

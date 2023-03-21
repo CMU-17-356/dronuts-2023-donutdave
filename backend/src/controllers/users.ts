@@ -1,6 +1,7 @@
 import { User } from '../models/user.js'
 import { Order } from '../models/order.js'
 import { Product } from '../models/product.js'
+import { Metric } from '../models/metrics'
 import { Request, Response } from 'express'
 import { companyID, creditAPI } from '../index.js'
 import got from 'got'
@@ -27,6 +28,16 @@ class UsersController {
     const user = new User(body)
     user.save()
       .then(() => {
+        // update metrics
+        if (process.env.NODE_ENV !== "test" && process.env.NODE_ENV !== "deploy_test" && process.env.NODE_ENV !== "development") {
+          Metric.findOne({title: "mvp"})
+            .then(async (metric) => {
+              if (metric) {
+                metric.num_accounts += 1
+                await metric.save();
+              }
+            })
+        }
         res.status(201).json(`User ${body.username} created successfully`);
       })
       .catch(err => {
@@ -162,6 +173,18 @@ class UsersController {
           user.history.push(order)
           await order.save()
           await user.save()
+
+          // update metrics
+          if (process.env.NODE_ENV !== "test" && process.env.NODE_ENV !== "deploy_test" && process.env.NODE_ENV !== "development") {
+            Metric.findOne({title: "mvp"})
+              .then(async (metric) => {
+                if (metric) {
+                  metric.num_orders += 1
+                  metric.gross_revenue += order.totals
+                  await metric.save();
+                }
+              })
+          }
 
           return res.status(200).json(order)
         }

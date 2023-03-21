@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { router } from './routes/routes.js';
-import cors from 'cors';
+// import cors from 'cors';
 
 dotenv.config();
 const app: Express = express();
@@ -40,12 +40,12 @@ app.get('/', (req: Request, res: Response) => {
 // If you have more origins you would like to add, you can add them to the array below.
 const allowedOrigins = ['http://localhost:8080', 'https://dronuts-dave-frontend.fly.dev'];
 
-const options: cors.CorsOptions = {
-  origin: allowedOrigins
-};
+// const options: cors.CorsOptions = {
+//   origin: allowedOrigins
+// };
 
 // Then pass these options to cors:
-app.use(cors(options));
+// app.use(cors(options));
 app.use(express.json())
 app.use('/api', router)
 
