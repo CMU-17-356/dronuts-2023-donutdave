@@ -9,6 +9,8 @@ const app: Express = express();
 const port = process.env.PORT;
 const companyID = "donutdave";
 const creditAPI = "https://356-credit-api.fly.dev/api/transactions"
+const droneAPI = "https://356-drone-api.fly.dev/api/drones"
+const airbaseAPI = "https://356-drone-api.fly.dev/api/airbases"
 
 // connect to db
 let db_url = 'mongodb+srv://xinyao:20001028@cluster0.kwf9tsb.mongodb.net/proddb?retryWrites=true&w=majority'
@@ -51,4 +53,4 @@ const server = app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
 
-export { app, server, companyID, creditAPI } // for testing
+export { app, server, companyID, creditAPI, droneAPI, airbaseAPI } // for testing
