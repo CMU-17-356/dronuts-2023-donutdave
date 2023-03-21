@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from "axios";
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -59,8 +60,11 @@ export default function CheckoutPage() {
   const handleNext = () => {
     setActiveStep(activeStep + 1);
     if (activeStep === 2) {
-      fetch('https://356-credit-api.fly.dev/api/transactions/1/process', {
+      axios.post('https://dronuts-backend.fly.dev/api/users/dave/checkout', {
         method: 'POST',
+        cart: [{title: "strawberry", quantity: 1}],
+        address: "5000 Forbes Ave, Pittsburgh, PA 15232",
+        credit_card: "1234123412341234",
       })
       .catch(err => {
         console.error(err)
