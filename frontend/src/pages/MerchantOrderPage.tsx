@@ -110,6 +110,14 @@ function MerchantOrderPage (props : OrderPageProps) {
         }
       ];
     
+// const Order = fetch('https://356-credit-api.fly.dev/api/order/', {
+//   method: 'GET',
+// })
+// .catch(err => {
+//   console.error(err)
+// });
+// console.log(Order);
+
     return (
         <ThemeProvider theme={theme}>
         <Box mt={2} display="flex">
@@ -118,8 +126,10 @@ function MerchantOrderPage (props : OrderPageProps) {
                     <CardContent>
                         <Box display="flex" mb={1}>
                             <Box ml={2} flex="1">
+                              
                                 <Typography variant="h5">
-                                    Order Number: 5
+                                    Order Status: 
+
                                 </Typography>
                                 <Typography variant="body2">
                                 <ListItem  >
