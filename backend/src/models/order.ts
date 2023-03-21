@@ -1,7 +1,5 @@
 import { Model, Schema, model } from 'mongoose'
 
-// const sanitizerPlugin = require('mongoose-sanitizer-plugin');
-
 interface IOrder {
   username: string;
   items: [{
