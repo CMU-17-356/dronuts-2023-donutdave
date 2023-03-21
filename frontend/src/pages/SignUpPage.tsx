@@ -15,7 +15,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-// import Link from 'react-router-dom' ;
 
 function Copyright(props: any) {
   return (
@@ -70,8 +69,32 @@ function SignUpPage() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(firstName + " " + lastName)
+
+    fetch('https://dronuts-backend.fly.dev/api/users/', {
+      method: "POST",
+
+      body: JSON.stringify({
+        username: username,
+        password: password,
+        full_name: firstName + " " + lastName,
+      }),
+
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      },
+    })
+    .catch(err => {
+      console.error(err)
+    });
+
     setOpen(true);
   };
+
+  const [firstName, setFirstName] = React.useState("")
+  const [lastName, setLastName] = React.useState("")
+  const [username, setUsername] = React.useState("")
+  const [password, setPassword] = React.useState("")
 
   return (
     <ThemeProvider theme={theme}>
@@ -89,7 +112,7 @@ function SignUpPage() {
           <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign Up
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -102,6 +125,9 @@ function SignUpPage() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -112,6 +138,9 @@ function SignUpPage() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -123,6 +152,9 @@ function SignUpPage() {
                   type="username"
                   id="username"
                   autoComplete="new-username"
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -134,6 +166,9 @@ function SignUpPage() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
