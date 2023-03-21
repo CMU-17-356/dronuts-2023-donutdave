@@ -1,7 +1,7 @@
 import { User } from '../models/user.js'
 import { Order } from '../models/order.js'
 import { Product } from '../models/product.js'
-import { Metric } from '../models/metrics'
+import { Metric } from '../models/metrics.js'
 import { Request, Response } from 'express'
 import { companyID, creditAPI } from '../index.js'
 import got from 'got'
