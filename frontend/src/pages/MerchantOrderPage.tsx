@@ -23,22 +23,6 @@ interface Props {
   items: Item[];
 }
 
-const ItemList: FC<Props> = ({ items }) => {
-  return (
-    <table>
-      <tr>
-          <th style={{display: 'flex'}}>Donut</th>
-          <th>Quantity</th>
-      </tr>
-      {items.map((item) => (
-        <tr >
-          <td>{item.name}</td>
-          <td>{item.quantity}</td>
-        </tr>
-      ))}
-    </table>
-  );
-};
 
 const theme = createTheme({
     palette: {
@@ -51,72 +35,7 @@ const theme = createTheme({
 
   
 function MerchantOrderPage (props : OrderPageProps) {
-    const invoiceItems = [
-        {
-          qty: 1,
-          price: 84.99,
-          subtotal: 84.99,
-          currency: "USD",
-          name: "Gaming Headset"
-        },
-        {
-          qty: 2,
-          price: 99.99,
-          subtotal: 199.98,
-          currency: "USD",
-          name: "Gaming Controller"
-        },
-        {
-          qty: 1,
-          price: 19.99,
-          subtotal: 19.99,
-          currency: "USD",
-          name: "USB PowerPort"
-        },
-        {
-          qty: 5,
-          price: 5.08,
-          subtotal: 25.4,
-          currency: "USD",
-          name: "Smartphone Screen Protector"
-        },
-        {
-          qty: 3,
-          price: 17.99,
-          subtotal: 53.97,
-          currency: "USD",
-          name: "V-Neck T-Shirt"
-        },
-        {
-          qty: 1,
-          price: 33.96,
-          subtotal: 33.96,
-          currency: "USD",
-          name: "Night Vision Binoculars"
-        },
-        {
-          qty: 0,
-          price: 8.49,
-          subtotal: 0,
-          currency: "USD",
-          name: "USB Car Charger"
-        },
-        {
-          qty: 1,
-          price: 79.99,
-          subtotal: 79.99,
-          currency: "USD",
-          name: "Car Dash Cam"
-        },
-        { qty: 0, price: 11.44, subtotal: 0, currency: "USD", name: "Sunglasses" },
-        {
-          qty: 1,
-          price: 21.99,
-          subtotal: 21.99,
-          currency: "USD",
-          name: "Leather Belt"
-        }
-      ];
+    
     
 const {orders, setOrders} = useOrderArray('orders', []);
 const products = new Array<Product>();
