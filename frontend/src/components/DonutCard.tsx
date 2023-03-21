@@ -15,15 +15,17 @@ type DonutCardProps = {
     margin : string;
     product: Product;
     addToCart : (product : Product) => void
-    removeFromCart : (product : Product) => void
+    removeFromCart : (id : string) => void
+    numInArray : (id : string) => number
 }
 
 type QuantityPickerProps = {
     handleAdd : () => void
     handleRemove : () => void
+    initQuantity : number
 }
 function QuantityPicker (props : QuantityPickerProps) {
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(props.initQuantity);
   return (
      <ButtonGroup size="small" aria-label="small outlined button group">
       <Button disabled={counter <= 0} onClick={() => {
@@ -59,7 +61,8 @@ function DonutCard (props : DonutCardProps) {
             // 16:9
             pt: '0.25%',
           }} 
-          image={require('../images' + props.product.image)}
+          image={props.product.image === "" ? 'https://www.firstbenefits.org/wp-content/uploads/2017/10/placeholder.png' 
+                                            : props.product.image}
           alt="random"
         />
         <CardContent sx={{ flexGrow: 1 }}>
@@ -67,15 +70,13 @@ function DonutCard (props : DonutCardProps) {
           {`${props.product.name}`}
           </Typography>
           <Typography>
-          {`${props.product.description}`}
-          </Typography>
-          <Typography>
           {`${USDollar.format(props.product.price)}`}
           </Typography>
         </CardContent>
         <CardActions>
             <QuantityPicker handleAdd={() => props.addToCart(props.product)} 
-                            handleRemove={() => props.removeFromCart(props.product)}
+                            handleRemove={() => props.removeFromCart(props.product.id)}
+                            initQuantity = {props.numInArray(props.product.id)}
             />
         </CardActions>
       </Card>

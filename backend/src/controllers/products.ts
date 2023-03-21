@@ -1,4 +1,4 @@
-import { Product, IProduct } from '../models/product.js'
+import { Product } from '../models/product.js'
 import { Request, Response } from 'express'
 
 class ProductsController {

@@ -1,18 +1,16 @@
 import { Schema, model } from 'mongoose'
 import { Product, IProduct } from './product.js'
 
-// const sanitizerPlugin = require('mongoose-sanitizer-plugin');
-
 const defaultMerchant = "Lawrenceville Donut Store"
 
 interface IMerchant {
-  name: String;
-  location: String;
+  name: string;
+  location: string;
   menu: [{
     product: IProduct;
-    inventory: Number;
+    inventory: number;
   }];
-};
+}
 
 const merchantSchema = new Schema({
   name: {
@@ -30,7 +28,6 @@ const merchantSchema = new Schema({
   },
 });
 
-// merchantSchema.plugin(sanitizerPlugin);
 const Merchant = model('Merchant', merchantSchema)
 
 export { Merchant, defaultMerchant }
