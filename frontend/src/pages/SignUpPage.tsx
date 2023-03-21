@@ -69,7 +69,6 @@ function SignUpPage() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(firstName + " " + lastName)
 
     fetch('https://dronuts-backend.fly.dev/api/users/', {
       method: "POST",
@@ -84,11 +83,14 @@ function SignUpPage() {
         "Content-type": "application/json; charset=UTF-8"
       },
     })
-    .catch(err => {
-      console.error(err)
-    });
-
-    setOpen(true);
+      .then(response => {
+        if (response.ok) {
+          setOpen(true)
+        }
+      })
+      .catch(err => {
+        console.error(err)
+      });
   };
 
   const [firstName, setFirstName] = React.useState("")
