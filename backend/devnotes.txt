@@ -1,0 +1,12 @@
+Mongoose with TS: https://mongoosejs.com/docs/typescript.html
+
+Integreating the entire stack:
+https://medium.com/swlh/how-to-create-your-first-mern-mongodb-express-js-react-js-and-node-js-stack-7e8b20463e66
+
+Testing:
+- view all users: curl http://localhost:8080/api/users
+- (valid) add new user: curl http://localhost:8080/api/users -X POST -H 'Content-Type: application/json' -d '{"username":"admin","password":"admin123","full_name":"Thanos"}'
+- (invalid) add new user: curl http://localhost:8080/api/users -X POST -H 'Content-Type: application/json' -d '{"username":"admin"}'
+- (valid) view one user: curl http://localhost:8080/api/users/admin
+- (valid) delete one user: curl http://localhost:8080/api/users/admin -X DELETE
+- (valid) update cart: curl http://localhost:8080/api/users/admin/cart -X PATCH -H 'Content-Type: application/json' -d '{"items":[{"name": "Plain donut"}]}'
