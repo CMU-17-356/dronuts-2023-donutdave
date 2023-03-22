@@ -2,6 +2,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Product from './Product';
+import getCounts from './getCounts';
 
 type CartModalProps = {
     open : boolean;
@@ -21,16 +22,6 @@ const style = {
     boxShadow: 24,
     p: 4,
   };
-
-const getCounts = function (products: Product[]) {
-    const someObj : IObjectKeys = {}
-    const counts = products.reduce(function(obj, product) {
-        obj[product.name] = obj[product.name] ? ++obj[product.name] : 1;
-        return obj;
-    }, someObj);
-    return counts
-}
-
 
 let USDollar = new Intl.NumberFormat('en-US', {
     style: 'currency',
