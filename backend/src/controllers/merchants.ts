@@ -6,7 +6,7 @@ import got from 'got'
 class MerchantsController {
   public getDrones = async (req: Request, res: Response) => {
     const response = await got.get(airbaseAPI + "/" + companyID).json()
-    var drones = []
+    const drones = []
     for (const id of response.drones) {
       const d = await got.get(droneAPI + "/" + id).json();
       if (d.current_delivery && d.current_delivery.status === "in_route") {
