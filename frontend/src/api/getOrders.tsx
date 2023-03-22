@@ -41,7 +41,7 @@ async function getSpecificOrders(id: string) {
   // https://dronuts-backend.fly.dev/api/orders
   const orders = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/orders/${id}`)
   //@ts-ignore
-  const data_array = convertToOrder(orders);
+  const data_array = convertToOrder(orders.data);
   return data_array
 }
 
