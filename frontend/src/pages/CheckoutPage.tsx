@@ -1,7 +1,6 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
