@@ -4,50 +4,45 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
+import AddressInfo from '../types/AddressInfo';
+import PaymentInfo from '../types/PaymentInfo';
+import useProductArray from './useProductArray';
+import CheckoutInfo from '../types/CheckoutInfo';
+import { Box, Button } from '@mui/material';
+import getCountsTitle from './getCountsTitle';
 
-const products = [
-  {
-    name: 'Strawberry Frosted',
-    desc: '1 dozen',
-    price: '$9.99',
-  },
-  {
-    name: 'Chocolate Glaze',
-    desc: '1/2 dozen',
-    price: '$5.65',
-  },
-  {
-    name: 'Boston Kreme',
-    desc: '1 pc.',
-    price: '$1.00',
-  },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
-const addresses = ['5522 Kentucky Ave', 'Pittsburgh', 'PA', '15232', 'USA'];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr Steven Wu' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
+type ReviewProps = {
+  addressInfo : AddressInfo
+  paymentInfo : PaymentInfo
+  handleNext : (checkoutInfo : CheckoutInfo) => void
+  handleBack : () => void
+}
 
-export default function Review() {
+export default function Review(props : ReviewProps) {
+  const {products, totalPrice, numInArray, getUniqueProducts } = useProductArray('cart')
+  const payments = [
+    { name: 'Card holder', detail: props.paymentInfo.name },
+    { name: 'Card number', detail: props.paymentInfo.cardNumber },
+    { name: 'Expiry date', detail: props.paymentInfo.expDate },
+  ];
+  const joinedAddress = [props.addressInfo.address, props.addressInfo.city,
+    props.addressInfo.state, props.addressInfo.zip].join(', ')
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-        {products.map((product) => (
+        {getUniqueProducts().map((product) => (
           <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
+            <ListItemText primary={product.name} />
+            <Typography variant="body2">{(product.price * numInArray(product.id)).toFixed(2)}</Typography>
           </ListItem>
         ))}
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            $16.64
+            {totalPrice().toFixed(2)}
           </Typography>
         </ListItem>
       </List>
@@ -56,8 +51,8 @@ export default function Review() {
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Shipping
           </Typography>
-          <Typography gutterBottom>Steven Wu</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
+          <Typography gutterBottom>{props.paymentInfo.name}</Typography>
+          <Typography gutterBottom>{joinedAddress}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
@@ -76,6 +71,18 @@ export default function Review() {
             ))}
           </Grid>
         </Grid>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Button onClick={props.handleBack} sx={{ mt: 3, ml: 1 }}>
+                  Back
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => props.handleNext({cart: getCountsTitle(products), address: joinedAddress, credit_card : props.paymentInfo.cardNumber})}
+                  sx={{ mt: 3, ml: 1 }}
+                >
+                  Submit Order
+                </Button>
+        </Box>
       </Grid>
     </React.Fragment>
   );

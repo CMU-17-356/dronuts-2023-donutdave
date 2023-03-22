@@ -19,12 +19,25 @@ const useProductArray = (key: string, initialArray? : Product[]) => {
   };
 
   const getTotalPrice = () => {
-    return products.reduce((total, item) => total + item.price , 0);
+    const floatPrice = products.reduce((total, item) => total + item.price , 0);
+    return floatPrice
   };
 
   const numInArray = (thisID : string) => {
     const notThisProduct = products.filter((product) => product.id === thisID)
     return notThisProduct.length
+  }
+
+  function getUniqueProducts () {
+    const uniqueProducts = [];
+    const map = new Map();
+    for (const product of products) {
+        if(!map.has(product.id)){
+            map.set(product.id, true);    // set any value to Map
+            uniqueProducts.push(product);
+        }
+    }
+    return uniqueProducts
   }
 
   return {
@@ -33,7 +46,8 @@ const useProductArray = (key: string, initialArray? : Product[]) => {
     removeProduct: (id: string) => handleRemoveProduct(id),
     totalPrice: getTotalPrice,
     setProducts: setProducts,
-    numInArray : numInArray
+    numInArray : numInArray,
+    getUniqueProducts
   };
 };
  

@@ -13,6 +13,7 @@ interface ProductResponse {
 function convertToProduct(json: ProductResponse): Product {
     return {
       name: json.display_name,
+      title: json.title,
       image: json.image,
       price: json.price,
       id: json._id

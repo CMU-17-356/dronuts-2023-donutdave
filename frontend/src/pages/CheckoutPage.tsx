@@ -1,7 +1,6 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
@@ -15,6 +14,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddressForm from '../components/AddressForm';
 import PaymentForm from '../components/PaymentForm';
 import Review from '../components/Review';
+import AddressInfo from '../types/AddressInfo';
+import PaymentInfo from '../types/PaymentInfo';
+import CheckoutInfo from '../types/CheckoutInfo';
+import { useNavigate } from 'react-router-dom';
+import useProductArray from '../components/useProductArray';
 
 function Copyright() {
   return (
@@ -31,19 +35,6 @@ function Copyright() {
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
-function getStepContent(step: number) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -55,33 +46,60 @@ const theme = createTheme({
 
 export default function CheckoutPage() {
   const [activeStep, setActiveStep] = React.useState(0);
-
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-    if (activeStep === 2) {
-      fetch('https://dronuts-backend.fly.dev/api/users/dave/checkout', {
-        method: "POST",
-
-        body: JSON.stringify({
-          cart: [{ title: "strawberry", quantity: 2 }],
-          address: "5000 Forbes Ave, Pittsburgh, PA 15232",
-          credit_card: "1234123412341234",
-        }),
-        
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        },
-      })
-      .catch(err => {
-        console.error(err)
-      });
+  const [addressInfo, setAddressInfo] = React.useState({firstName : "", lastName : "", address: "", city: "",
+                                                        state: "", zip : "", country: ""} as AddressInfo);
+  const [paymentInfo, setPaymentInfo] = React.useState({name : "", cardNumber : "", expDate: "", cvv: ""} as PaymentInfo);
+  const [orderID, setOrderID] = React.useState("")
+  const handleAddress = (addressInfo : AddressInfo) => {
+    if (Object.values(addressInfo).find((val) => val === "") === undefined) {
+      setAddressInfo(addressInfo)
+      setActiveStep(activeStep + 1);
     }
+  }
+  const handlePayment = (paymentInfo : PaymentInfo) => {
+    if (Object.values(paymentInfo).find((val) => val === "") === undefined) {
+      setPaymentInfo(paymentInfo)
+      setActiveStep(activeStep + 1);
+    }
+  }
+  const { setProducts } = useProductArray('cart')
+  const handleCheckout = (checkoutInfo : CheckoutInfo) => {
+    fetch('https://dronuts-backend.fly.dev/api/users/dave/checkout', {
+      method: "POST",
+
+      body: JSON.stringify(checkoutInfo),
+      
+      headers: {
+          "Content-type": "application/json; charset=UTF-8"
+      },
+    })
+    .then(res => res.json())
+    .then(json => {
+      setOrderID(json.transaction_id)
+      setActiveStep(activeStep + 1)
+      setProducts([])
+    })
+    .catch(err => {
+      console.error(err)
+    });
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
+  const navigate = useNavigate();
+  function getStepContent(step: number) {
+    switch (step) {
+      case 0:
+        return <AddressForm handleNext={handleAddress} handleBack={() => navigate('/customer')}/>;
+      case 1:
+        return <PaymentForm handleNext={handlePayment} handleBack={handleBack}/>;
+      case 2:
+        return <Review addressInfo={addressInfo} paymentInfo={paymentInfo} handleNext={handleCheckout} handleBack={handleBack}/>;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -118,26 +136,19 @@ export default function CheckoutPage() {
                 Thank you for your order.
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We will send you an update when your order is airborne.
+                {`Your order ID is ${orderID}. We will send you an update when your order is airborne.`}
               </Typography>
+              <Button
+                  variant="contained"
+                  onClick={() => navigate('/customer')}
+                  sx={{ mt: 3, ml: 1 }}
+                >
+                  Return to Menu
+                </Button>
             </React.Fragment>
           ) : (
             <React.Fragment>
               {getStepContent(activeStep)}
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                {activeStep !== 0 && (
-                  <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                    Back
-                  </Button>
-                )}
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                </Button>
-              </Box>
             </React.Fragment>
           )}
         </Paper>
