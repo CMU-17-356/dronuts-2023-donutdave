@@ -8,12 +8,13 @@ import DonutCard from '../components/DonutCard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import IconButton from '@mui/material/IconButton';
 import { useState } from 'react';
-import Cart from '../components/Cart';
 import Product from '../components/Product';
 import CartModal from '../components/CartModal';
 import useProductArray from '../components/useProductArray';
 
-type CustomerPageProps = {}
+type CustomerPageProps = {
+  products: Product[]
+}
 
 const theme = createTheme({
   palette: {
@@ -28,14 +29,8 @@ function CustomerPage (props : CustomerPageProps) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const initCart = new Cart([])
-  const [cart, setCart] = useState(initCart);
-  const addToCart = function (product : Product) {
-    setCart(cart.addProduct(product))
-  }
-  const removeFromCart = function (product : Product) {
-    setCart(cart.removeProduct(product))
-  }
+  const {products, pushProduct, removeProduct, totalPrice, numInArray} = useProductArray('cart', []);
+  const cartProducts = products
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -43,7 +38,6 @@ function CustomerPage (props : CustomerPageProps) {
         <Link to="/employee"> <Button >Employee Page</Button></Link>
         <Link to="/signup"> <Button >Sign Up</Button></Link>
         <Link to="/checkout"> <Button >Checkout</Button></Link>
-        <Link to="/merchant"> <Button >Merchant</Button></Link>
         <IconButton onClick={handleOpen}>
           <ShoppingCartIcon />
         </IconButton>
@@ -72,4 +66,3 @@ function CustomerPage (props : CustomerPageProps) {
 };
 
 export default CustomerPage;
-

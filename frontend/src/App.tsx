@@ -20,7 +20,7 @@ function App (props : AppProps) {
                     <Route path="order" element={<OrderPage />} />
                     <Route path="signup" element={<SignUpPage />} />
                     <Route path="checkout" element={<CheckoutPage />} />
-                    <Route path="merchant" element={<MerchantOrderPage />} />
+                    <Route path="merchant/:id" element={<MerchantOrderPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>

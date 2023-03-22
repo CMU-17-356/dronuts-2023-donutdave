@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import React, { FC, useState } from "react";
 import Button from '@mui/material/Button';
 import { Avatar, Box, Card, CardContent, Container, Divider, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useOrderArray from '../components/ueOrderArray';
-import getOrders from '../api/getOrders';
+import {getOrders, getSpecificOrders} from '../api/getOrders';
 import getSpecificProduct from '../api/getSpecificProduct';
 
 import { useEffect } from "react";
@@ -37,41 +37,43 @@ const theme = createTheme({
   
 function MerchantOrderPage (props : OrderPageProps) {
     
-    
+  const { id } = useParams();
+  console.log(id);
 const {orders, setOrders} = useOrderArray('orders', []);
 
 const [products, setProducts] = useState([['x',1.99]]);
 
 
-    useEffect(() => {
-        const fetchData = async function () {
-            const fetchedOrders = await getOrders()
-            setOrders(fetchedOrders)
-        }
-        fetchData()
-        const p = JSON.stringify(orders)
-    console.log(JSON.stringify(orders))
-    let empObj =  JSON.parse(p);
-    const cartItems = (empObj[0].items)
-
-
-    for (let i = 0; i < cartItems.length; i++) {
-      let item = cartItems[i]
-      let l = getSpecificProduct(item.title)
-      console.log(l)
-      l.then((value) => {  
-        setProducts([...products, [value.title, value.price]])
-         })     
+useEffect(() => {
+  console.log("use effect")
+  const fetchData = async function () {
+      const fetchedOrders = await getOrders()
+      setOrders(fetchedOrders)
   }
+  fetchData()
+  const p = JSON.stringify(orders)
+console.log(JSON.stringify(orders))
+let empObj =  JSON.parse(p);
+const cartItems = (empObj[0].items)
 
-    }, [setOrders])
-    const p = JSON.stringify(orders)
-    console.log(JSON.stringify(orders))
-    let empObj =  JSON.parse(p);
-    const cartItems = (empObj[0].items)
+
+for (let i = 0; i < cartItems.length; i++) {
+let item = cartItems[i]
+let l = getSpecificProduct(item.title)
+console.log(l)
+l.then((value) => {  
+  setProducts([...products, [value.title, value.price]])
+   })     
+}
+
+}, [setOrders])
+const p = JSON.stringify(orders)
+console.log(JSON.stringify(orders))
+let empObj =  JSON.parse(p);
+const cartItems = (empObj[0].items)
 
 
-  console.log(cartItems);
+console.log(cartItems);
 
     return (
         <ThemeProvider theme={theme}>
