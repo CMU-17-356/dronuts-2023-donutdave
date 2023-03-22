@@ -42,12 +42,7 @@ async function getSpecificOrders(id: string) {
   const orders = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/orders/${id}`)
   console.log("orders", orders)
   //@ts-ignore
-<<<<<<< HEAD
   const data_array = convertToOrder(orders.data);
-=======
-  const data_array = convertToOrder(orders);
-  console.log("data array", data_array)
->>>>>>> 877a32c (before pulling)
   return data_array
 }
 
