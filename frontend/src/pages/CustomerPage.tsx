@@ -66,4 +66,3 @@ function CustomerPage (props : CustomerPageProps) {
 };
 
 export default CustomerPage;
-

@@ -1,12 +1,12 @@
 interface CustomerOrder {
-    name: string,
+    username: string,
     id: string,
     items: [{
         title: string;
         quantity: number;
       }],
     address: string,
-    price: number,
+    totals: number,
   }
 
 export default CustomerOrder

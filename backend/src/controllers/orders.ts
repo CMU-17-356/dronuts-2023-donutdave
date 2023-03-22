@@ -7,10 +7,10 @@ class OrdersController {
   public getOrders = async (req: Request, res: Response) => {
     if (req.query.status == null) {
       await Order.find({})
-        .then(orders => {
+        .then((orders: any) => {
           return res.status(200).json(orders)
         })
-        .catch(err => {
+        .catch((err: string) => {
           console.log("getOrders: " + err)
           return res.status(500).json(err)
         });
@@ -20,10 +20,10 @@ class OrdersController {
         return res.status(404).json("Invalid order status")
       }
       await Order.find({ status: status })
-        .then(orders => {
+        .then((orders: any) => {
           return res.status(200).json(orders)
         })
-        .catch(err => {
+        .catch((err: string) => {
           console.log("getOrders: " + err)
           return res.status(500).json(err)
         });
@@ -32,13 +32,13 @@ class OrdersController {
 
   public getOrderById = async (req: Request, res: Response) => {
     await Order.findById(req.params.id)
-      .then(order => {
+      .then((order: any) => {
         if (order) {
           return res.status(200).json(order)
         }
         return res.status(404).json(`Order ${req.params.id} not found`)
       })
-      .catch(err => {
+      .catch((err: string) => {
         console.log("getOrderById: " + err)
         return res.status(500).json(err)
       });
@@ -68,7 +68,7 @@ class OrdersController {
 
   public assignDroneToOrder = async (req: Request, res: Response) => {
     await Order.findById(req.params.id)
-      .then(async (order) => {
+      .then(async (order: any) => {
         if (order) {
           const drone_id = await MerchantsController.getFirstAvailableDrone()
           if (drone_id) {
@@ -78,7 +78,7 @@ class OrdersController {
         }
         return res.status(404).json(`Order ${req.params.id} not found`)
       })
-      .catch(err => {
+      .catch((err: string) => {
         console.log("assignDroneToOrder: " + err)
         return res.status(500).json(err)
       });
