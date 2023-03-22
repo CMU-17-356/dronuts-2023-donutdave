@@ -93,7 +93,7 @@ const [products, setProducts] = useState([['x',1.99]]);
                             </ListItemAvatar>
                             <ListItemText
                                 primary={`Username: ` +  empObj[0].username}
-                                secondary={empObj[1].address}
+                                secondary={empObj[0].address}
                             />
                             
                         </ListItem> 
