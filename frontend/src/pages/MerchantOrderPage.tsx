@@ -15,11 +15,6 @@ interface Item {
     quantity: number;
     name: string;
 }
-  
-interface Props {
-  items: Item[];
-}
-
 
 const theme = createTheme({
     palette: {
@@ -49,9 +44,6 @@ const [orders, setOrders] = useState(
   id: "string"
   } as Order
 );
-
-const [products, setProducts] = useState([['x',1.99]]);
-
 
 useEffect(() => {
   if (id !== undefined) {
