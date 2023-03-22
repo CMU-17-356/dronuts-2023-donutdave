@@ -77,12 +77,6 @@ export default function PaymentForm(props : PaymentFormProps) {
             }}
           />
         </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-            label="Remember credit card details for next time"
-          />
-        </Grid>
         <Grid>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <Button onClick={props.handleBack} sx={{ mt: 3, ml: 1 }}>
