@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import Product from '../components/Product';
 import { isTemplateSpan } from 'typescript';
+import Order from '../components/Order';
 
 
 type OrderPageProps = {}
@@ -39,7 +40,21 @@ function MerchantOrderPage (props : OrderPageProps) {
     
   const { id } = useParams();
   console.log(id);
-const {orders, setOrders} = useOrderArray('orders', []);
+// const {orders, setOrders} = useOrderArray('orders', []);
+
+const [orders, setOrders] = useState(
+  {username : "",
+  items: [{
+      title: "",
+      quantity: 0,
+  }],
+  transaction_id: "",
+  totals : 0,
+  address : "" ,   // Delivery address
+  status: "" ,     // unpaid -> paid -> sent -> delivered
+  id: "string"
+  } as Order
+);
 
 const [products, setProducts] = useState([['x',1.99]]);
 
@@ -47,31 +62,21 @@ const [products, setProducts] = useState([['x',1.99]]);
 useEffect(() => {
   console.log("use effect")
   const fetchData = async function () {
-      const fetchedOrders = await getOrders()
+      const fetchedOrders = await getSpecificOrders(id as string)
+      console.log(fetchedOrders, "juui")
       setOrders(fetchedOrders)
   }
   fetchData()
-  const p = JSON.stringify(orders)
-console.log(JSON.stringify(orders))
-let empObj =  JSON.parse(p);
-const cartItems = (empObj[0].items)
 
 
-for (let i = 0; i < cartItems.length; i++) {
-let item = cartItems[i]
-let l = getSpecificProduct(item.title)
-console.log(l)
-l.then((value) => {  
-  setProducts([...products, [value.title, value.price]])
-   })     
-}
+}, [setOrders, id])
 
-}, [setOrders])
+console.log(orders)
 const p = JSON.stringify(orders)
 console.log(JSON.stringify(orders))
 let empObj =  JSON.parse(p);
-const cartItems = (empObj[0].items)
-
+const cartItems = (empObj.items)
+console.log(cartItems)
 
 console.log(cartItems);
 
