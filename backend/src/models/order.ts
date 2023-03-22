@@ -1,23 +1,22 @@
 import { Model, Schema, model } from 'mongoose'
 
-// const sanitizerPlugin = require('mongoose-sanitizer-plugin');
-
 interface IOrder {
-  username: String;
+  username: string;
   items: [{
-    title: String;
-    quantity: Number;
+    title: string;
+    quantity: number;
   }];
-  totals: Number;
-  address: String;
-  transaction_id: String;
-};
+  totals: number;
+  address: string;
+  transaction_id: string;
+  status: string; // unpaid -> paid -> sent -> delivered
+}
 
 interface IOrderMethods {
   // if item with the same product name already exists in order, throw an error
   // else, add the item to order with the specified quantity (default to 1)
-  addItemToOrder(title: String, quantity: Number): void;
-};
+  addItemToOrder(title: string, quantity: number): void;
+}
 
 type OrderModel = Model<IOrder, {}, IOrderMethods>
 
@@ -54,19 +53,22 @@ const orderSchema = new Schema<IOrder, OrderModel, IOrderMethods>({
   transaction_id: {
     type: String,
     default: "",
-  }
+  },
+  status: {
+    type: String,
+    default: "unpaid",
+  },
 });
 
 orderSchema.method('addItemToOrder', function addItemToOrder(title, q=1) {
   for (let i = 0; i < this.items.length; i++) {
     if (this.items[i].title === title) {
       throw new Error('addItemToOrder: item already exists in order')
-    };
-  };
+    }
+  }
   this.items.push({title: title, quantity: q});
 });
 
-// orderSchema.plugin(sanitizerPlugin);
 const Order = model('Order', orderSchema)
 
 export { Order }

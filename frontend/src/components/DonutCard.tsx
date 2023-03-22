@@ -15,7 +15,6 @@ type DonutCardProps = {
     margin : string;
     product: Product;
     addToCart : (product : Product) => void
-    // removeFromCart : (product : Product) => void
     removeFromCart : (id : string) => void
     numInArray : (id : string) => number
 }
@@ -26,7 +25,6 @@ type QuantityPickerProps = {
     initQuantity : number
 }
 function QuantityPicker (props : QuantityPickerProps) {
-  // const [counter, setCounter] = useState(0);
   const [counter, setCounter] = useState(props.initQuantity);
   return (
      <ButtonGroup size="small" aria-label="small outlined button group">
@@ -72,16 +70,13 @@ function DonutCard (props : DonutCardProps) {
           {`${props.product.name}`}
           </Typography>
           <Typography>
-          {/* {`${props.product.description}`}
-          </Typography>
-          <Typography> */}
           {`${USDollar.format(props.product.price)}`}
           </Typography>
         </CardContent>
         <CardActions>
             <QuantityPicker handleAdd={() => props.addToCart(props.product)} 
-                           handleRemove={() => props.removeFromCart(props.product.id)}
-                           initQuantity = {props.numInArray(props.product.id)}
+                            handleRemove={() => props.removeFromCart(props.product.id)}
+                            initQuantity = {props.numInArray(props.product.id)}
             />
         </CardActions>
       </Card>

@@ -36,5 +36,5 @@ const useProductArray = (key: string, initialArray? : Product[]) => {
     numInArray : numInArray
   };
 };
-
+ 
 export default useProductArray;

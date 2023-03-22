@@ -1,13 +1,11 @@
 import { Schema, model } from 'mongoose'
 
-// const sanitizerPlugin = require('mongoose-sanitizer-plugin');
-
 interface IProduct {
-  title: String;
-  display_name: String;
-  price: Number;
-  image: String;
-};
+  title: string;
+  display_name: string;
+  price: number;
+  image: string;
+}
 
 const productSchema = new Schema({
   title: {
@@ -23,17 +21,16 @@ const productSchema = new Schema({
     type: Number,
     required: true,
     validate: {
-      validator: function(p: Number) { return p > 0 },
+      validator: function(p: number) { return p > 0 },
       message: '{VALUE} is not an integer value',
     },
   },
   image: {
     type: String,
-    default: "" // TODO: or some other default image path
-  },
+    default: ""
+  }
 });
 
-// productSchema.plugin(sanitizerPlugin);
 const Product = model('Product', productSchema)
 
 export { Product }

@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import EmployeePage from './pages/EmployeePage';
-import CustomerPage from './pages/CustomerPage';
 import OrderPage from './pages/OrderPage';
 import SignUpPage from './pages/SignUpPage';
 import CheckoutPage from './pages/CheckoutPage';

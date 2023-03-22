@@ -1,13 +1,11 @@
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Cart from './Cart';
 import Product from './Product';
 
 type CartModalProps = {
     open : boolean;
     handleClose : () => void;
-    // cart : Cart;
     products : Product[];
     getTotal : () => number;
 }
@@ -31,6 +29,16 @@ const style = {
     }, someObj);
     return counts
 }
+
+// const getCounts = function (products: Product[]) {
+//     const someObj : IObjectKeys = {}
+//     const counts = products.reduce(function(obj, product) {
+//         obj[product.name] = obj[product.name] ? ++obj[product.name] : 1;
+//         return obj;
+//     }, someObj);
+//     return counts
+// }
+
 
 let USDollar = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -66,7 +74,6 @@ function CartModal (props: CartModalProps) {
       <Typography id="modal-modal-title" variant="h6" component="h2">
         Cart
       </Typography>
-
       <DisplayItems counts={getCounts(props.products)}/>
       {"Total: " + USDollar.format(props.getTotal())}
     </Box>

@@ -59,8 +59,18 @@ export default function CheckoutPage() {
   const handleNext = () => {
     setActiveStep(activeStep + 1);
     if (activeStep === 2) {
-      fetch('https://356-credit-api.fly.dev/api/transactions/1/process', {
-        method: 'POST',
+      fetch('https://dronuts-backend.fly.dev/api/users/dave/checkout', {
+        method: "POST",
+
+        body: JSON.stringify({
+          cart: [{ title: "strawberry", quantity: 2 }],
+          address: "5000 Forbes Ave, Pittsburgh, PA 15232",
+          credit_card: "1234123412341234",
+        }),
+        
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        },
       })
       .catch(err => {
         console.error(err)

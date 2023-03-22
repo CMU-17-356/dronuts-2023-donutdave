@@ -618,7 +618,7 @@ exports[`signup page rendering/navigating 1`] = `
     className="MuiBox-root css-binzgt"
   >
     <div
-      className="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-1999axt-MuiAvatar-root"
+      className="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-1vdq59x-MuiAvatar-root"
     >
       <svg
         aria-hidden={true}
@@ -635,7 +635,7 @@ exports[`signup page rendering/navigating 1`] = `
     <h1
       className="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
     >
-      Sign up
+      Sign Up
     </h1>
     <form
       className="MuiBox-root css-178yklu"
@@ -652,7 +652,7 @@ exports[`signup page rendering/navigating 1`] = `
             className="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
           >
             <label
-              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-12eh1s2-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink={false}
               htmlFor="firstName"
               id="firstName-label"
@@ -667,7 +667,7 @@ exports[`signup page rendering/navigating 1`] = `
               </span>
             </label>
             <div
-              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
+              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-kwuspi-MuiInputBase-root-MuiOutlinedInput-root"
               onClick={[Function]}
             >
               <input
@@ -709,7 +709,7 @@ exports[`signup page rendering/navigating 1`] = `
             className="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
           >
             <label
-              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-12eh1s2-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink={false}
               htmlFor="lastName"
               id="lastName-label"
@@ -724,7 +724,7 @@ exports[`signup page rendering/navigating 1`] = `
               </span>
             </label>
             <div
-              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
+              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-kwuspi-MuiInputBase-root-MuiOutlinedInput-root"
               onClick={[Function]}
             >
               <input
@@ -766,7 +766,7 @@ exports[`signup page rendering/navigating 1`] = `
             className="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
           >
             <label
-              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-12eh1s2-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink={false}
               htmlFor="username"
               id="username-label"
@@ -781,7 +781,7 @@ exports[`signup page rendering/navigating 1`] = `
               </span>
             </label>
             <div
-              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
+              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-kwuspi-MuiInputBase-root-MuiOutlinedInput-root"
               onClick={[Function]}
             >
               <input
@@ -823,7 +823,7 @@ exports[`signup page rendering/navigating 1`] = `
             className="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
           >
             <label
-              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-12eh1s2-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink={false}
               htmlFor="password"
               id="password-label"
@@ -838,7 +838,7 @@ exports[`signup page rendering/navigating 1`] = `
               </span>
             </label>
             <div
-              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
+              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-kwuspi-MuiInputBase-root-MuiOutlinedInput-root"
               onClick={[Function]}
             >
               <input
@@ -880,7 +880,7 @@ exports[`signup page rendering/navigating 1`] = `
             className="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
           >
             <span
-              className="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-root MuiCheckbox-colorPrimary css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+              className="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-root MuiCheckbox-colorPrimary css-122svsk-MuiButtonBase-root-MuiCheckbox-root"
               onBlur={[Function]}
               onContextMenu={[Function]}
               onDragLeave={[Function]}
@@ -924,7 +924,7 @@ exports[`signup page rendering/navigating 1`] = `
         </div>
       </div>
       <button
-        className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-fullWidth css-1vhaqj4-MuiButtonBase-root-MuiButton-root"
+        className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-fullWidth css-4s0l3v-MuiButtonBase-root-MuiButton-root"
         disabled={false}
         onBlur={[Function]}
         onContextMenu={[Function]}
@@ -950,7 +950,7 @@ exports[`signup page rendering/navigating 1`] = `
           className="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
         >
           <a
-            className="MuiTypography-root MuiTypography-body2 MuiLink-root MuiLink-underlineAlways css-101ca9i-MuiTypography-root-MuiLink-root"
+            className="MuiTypography-root MuiTypography-body2 MuiLink-root MuiLink-underlineAlways css-ef87ox-MuiTypography-root-MuiLink-root"
             href="#"
             onBlur={[Function]}
             onFocus={[Function]}

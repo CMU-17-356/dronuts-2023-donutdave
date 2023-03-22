@@ -10,10 +10,16 @@ interface ProductResponse {
   }
 
 
+<<<<<<< HEAD
   function convertToProduct(json: ProductResponse): Product {
     return {
       name: json.display_name,
       description : json.title,
+=======
+function convertToProduct(json: ProductResponse): Product {
+    return {
+      name: json.display_name,
+>>>>>>> master
       image: json.image,
       price: json.price,
       id: json._id
@@ -26,5 +32,8 @@ async function getProducts() {
     return data_array
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 export default getProducts
