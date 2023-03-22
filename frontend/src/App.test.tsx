@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import renderer from 'react-test-renderer';
 import CheckoutPage from './pages/CheckoutPage';
 import SignUpPage from './pages/SignUpPage';
@@ -13,10 +14,14 @@ test('signup page rendering/navigating', async () => {
 })
 
 test('checkout page rendering/navigating', async () => {
-  render(<CheckoutPage />)
+  render(<BrowserRouter>
+          <CheckoutPage />
+        </BrowserRouter>)
   expect(screen.getByText(/Checkout/i)).toBeInTheDocument()
 
-  const component = renderer.create(<CheckoutPage />);
+  const component = renderer.create(<BrowserRouter>
+    <CheckoutPage />
+  </BrowserRouter>);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 })
