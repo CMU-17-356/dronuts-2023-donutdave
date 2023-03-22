@@ -1,16 +1,11 @@
-import { Link, useParams } from 'react-router-dom';
-import React, { FC, useState } from "react";
+import { useParams } from 'react-router-dom';
+import { useState } from "react";
 import Button from '@mui/material/Button';
-import { Avatar, Box, Card, CardContent, Container, Divider, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Typography } from '@mui/material';
+import { Avatar, Box, Card, CardContent, Container, ListItem, ListItemAvatar, ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import useOrderArray from '../components/ueOrderArray';
-import {getOrders, getSpecificOrders} from '../api/getOrders';
-import getSpecificProduct from '../api/getSpecificProduct';
+import { getSpecificOrders } from '../api/getOrders';
 
 import { useEffect } from "react";
-import axios from "axios";
-import Product from '../components/Product';
-import { isTemplateSpan } from 'typescript';
 import Order from '../components/Order';
 
 
